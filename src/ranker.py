@@ -83,41 +83,35 @@ def _generate_reasoning(cand: dict, score_result: dict, rank: int) -> str:
     # Build the reasoning string using varied structural templates.
     # This ensures reviewers see different sentence patterns, not just
     # different slot values in the same "Fact; Fact; Fact" template.
+    # Facts are kept in original case — they cite profile data and contain
+    # proper nouns (IIT, Stanford, etc.) that lowercasing would corrupt.
     template_idx = rng.randint(0, 4)
 
     if template_idx == 0:
         # Semicolon list (baseline)
         reasoning = "; ".join(selected)
     elif template_idx == 1 and len(selected) >= 2:
-        # Full sentence: "With X, this candidate also brings Y"
-        reasoning = (
-            f"{selected[0]}. Additionally, {selected[1].lower()}"
-            if selected[1][0].isupper()
-            else f"{selected[0]}. Additionally, {selected[1]}"
-        )
+        # Full sentence: "X. Additionally, Y"
+        reasoning = f"{selected[0]}. Additionally, {selected[1]}"
         if len(selected) >= 3:
-            reasoning += f" — {selected[2].lower()}" if selected[2][0].isupper() else f" — {selected[2]}"
+            reasoning += f" — {selected[2]}"
     elif template_idx == 2 and len(selected) >= 2:
-        # JD-referencing: "Aligns with the Senior AI Engineer role: ..."
-        reasoning = (
-            f"Strong fit for the Senior AI Engineer role — {selected[0].lower()}"
-            if selected[0][0].isupper()
-            else f"Strong fit for the Senior AI Engineer role — {selected[0]}"
-        )
+        # JD-referencing: "Strong fit for the Senior AI Engineer role — X; Y"
+        reasoning = f"Strong fit for the Senior AI Engineer role — {selected[0]}"
         for fact in selected[1:]:
-            reasoning += f"; {fact.lower()}" if fact[0].isupper() else f"; {fact}"
+            reasoning += f"; {fact}"
     elif template_idx == 3 and len(selected) >= 2:
         # Lead-support: "Notably, X. Y."
-        reasoning = f"Notably, {selected[0].lower() if selected[0][0].isupper() else selected[0]}. {selected[1]}"
+        reasoning = f"Notably, {selected[0]}. {selected[1]}"
         if len(selected) >= 3:
-            reasoning += f"; {selected[2].lower()}" if selected[2][0].isupper() else f"; {selected[2]}"
+            reasoning += f"; {selected[2]}"
     else:
-        # Narrative: "X, with Y to complement"
+        # Narrative: "X, complemented by Y"
         reasoning = selected[0]
         if len(selected) >= 2:
-            reasoning += f", complemented by {selected[1].lower()}" if selected[1][0].isupper() else f", complemented by {selected[1]}"
+            reasoning += f", complemented by {selected[1]}"
         if len(selected) >= 3:
-            reasoning += f" and {selected[2].lower()}" if selected[2][0].isupper() else f" and {selected[2]}"
+            reasoning += f" and {selected[2]}"
 
     # Append concern if present (honest about gaps)
     # Top-5 candidates: only add concern 30% of the time to keep tone positive
@@ -146,8 +140,10 @@ def _extract_strong_facts(cand: dict, score_result: dict) -> list:
     skills = cand.get("skills", [])
     components = score_result.get("components", {})
 
+    from .scorer import _get_robust_yoe
+    yoe = _get_robust_yoe(cand)
+
     facts = []
-    yoe = profile.get("years_of_experience", 0)
     current_title = profile.get("current_title", "")
     current_company = profile.get("current_company", "")
 
@@ -226,7 +222,7 @@ def _extract_strong_facts(cand: dict, score_result: dict) -> list:
     nice_matches = skill_names & config.NICE_TO_HAVE_SKILLS
     if nice_matches:
         display = [s.title() for s in sorted(nice_matches)[:2]]
-        facts.append(f"Also brings {', '.join(display)} experience")
+        facts.append(f"Brings {', '.join(display)} experience")
 
     # Fact: Tier-1 education
     for edu in cand.get("education", []):
