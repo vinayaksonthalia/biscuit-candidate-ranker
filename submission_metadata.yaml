@@ -17,7 +17,7 @@ github_repo: "https://github.com/vinayaksonthalia/biscuit-candidate-ranker"
 
 sandbox_link: ""  # TODO: Add HuggingFace Spaces / Streamlit link
 
-reproduce_command: "python rank.py --candidates ./data/candidates.jsonl --out ./submission.csv"
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 
 compute:
   platform: "MacBook"
@@ -31,12 +31,13 @@ compute:
   pre_computation_time_minutes: 0
 
 ai_tools_used:
-  - "Gemini"
+  - "Gemini (Antigravity IDE)"
+  - "Claude (Anthropic)"
 
 ai_usage_summary: |
-  Used Gemini (Antigravity IDE) for architecture discussion, code review,
-  and debugging assistance. No candidate data was fed to any LLM.
-  All ranking logic is deterministic Python code authored by the participant.
+  Used Gemini (Antigravity IDE) for architecture, code generation, and
+  debugging. Used Claude for code review and gap analysis. No candidate
+  data was fed to any LLM. All ranking logic is deterministic Python code.
 
 methodology_summary: |
   Multi-stage deterministic ranking pipeline. Stage 1 eliminates honeypots
@@ -46,7 +47,7 @@ methodology_summary: |
   (core IR/NLP/ML vs fringe), experience band fit (5-9 years), behavioral
   engagement signals, and location/logistics alignment. Stage 3 ranks the
   top 100 and generates fact-grounded, varied reasoning per candidate.
-  Runtime: ~30 seconds on CPU, zero network, zero GPU.
+  Runtime: ~10 seconds on CPU, zero network, zero GPU.
 
 declarations:
   read_submission_spec: true
