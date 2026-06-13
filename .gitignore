@@ -1,0 +1,32 @@
+# Data files (too large for git)
+data/candidates.jsonl
+data/candidates.jsonl.gz
+data/*.parquet
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Outputs
+*.csv
+!sample_submission.csv
+
+# Temporary
+*.tmp
+*.bak
