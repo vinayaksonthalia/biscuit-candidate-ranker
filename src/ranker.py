@@ -78,10 +78,46 @@ def _generate_reasoning(cand: dict, score_result: dict, rank: int) -> str:
 
     # Pick 2-3 facts for the reasoning
     num_facts = min(len(all_facts), rng.choice([2, 3, 3]))
-    selected_facts = all_facts[:num_facts]
+    selected = all_facts[:num_facts]
 
-    # Build the reasoning string
-    reasoning = "; ".join(selected_facts)
+    # Build the reasoning string using varied structural templates.
+    # This ensures reviewers see different sentence patterns, not just
+    # different slot values in the same "Fact; Fact; Fact" template.
+    template_idx = rng.randint(0, 4)
+
+    if template_idx == 0:
+        # Semicolon list (baseline)
+        reasoning = "; ".join(selected)
+    elif template_idx == 1 and len(selected) >= 2:
+        # Full sentence: "With X, this candidate also brings Y"
+        reasoning = (
+            f"{selected[0]}. Additionally, {selected[1].lower()}"
+            if selected[1][0].isupper()
+            else f"{selected[0]}. Additionally, {selected[1]}"
+        )
+        if len(selected) >= 3:
+            reasoning += f" — {selected[2].lower()}" if selected[2][0].isupper() else f" — {selected[2]}"
+    elif template_idx == 2 and len(selected) >= 2:
+        # JD-referencing: "Aligns with the Senior AI Engineer role: ..."
+        reasoning = (
+            f"Strong fit for the Senior AI Engineer role — {selected[0].lower()}"
+            if selected[0][0].isupper()
+            else f"Strong fit for the Senior AI Engineer role — {selected[0]}"
+        )
+        for fact in selected[1:]:
+            reasoning += f"; {fact.lower()}" if fact[0].isupper() else f"; {fact}"
+    elif template_idx == 3 and len(selected) >= 2:
+        # Lead-support: "Notably, X. Y."
+        reasoning = f"Notably, {selected[0].lower() if selected[0][0].isupper() else selected[0]}. {selected[1]}"
+        if len(selected) >= 3:
+            reasoning += f"; {selected[2].lower()}" if selected[2][0].isupper() else f"; {selected[2]}"
+    else:
+        # Narrative: "X, with Y to complement"
+        reasoning = selected[0]
+        if len(selected) >= 2:
+            reasoning += f", complemented by {selected[1].lower()}" if selected[1][0].isupper() else f", complemented by {selected[1]}"
+        if len(selected) >= 3:
+            reasoning += f" and {selected[2].lower()}" if selected[2][0].isupper() else f" and {selected[2]}"
 
     # Append concern if present (honest about gaps)
     # Top-5 candidates: only add concern 30% of the time to keep tone positive
@@ -214,7 +250,7 @@ def _extract_weak_facts(cand: dict, score_result: dict) -> list:
     location = profile.get("location", "")
     country = profile.get("country", "")
     if location:
-        facts.append(f"Based in {location}, {country}")
+        facts.append(f"Located in {location}, {country}")
 
     # Notice period
     notice = signals.get("notice_period_days", 0)

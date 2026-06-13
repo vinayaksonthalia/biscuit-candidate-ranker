@@ -50,7 +50,7 @@ def score_candidate(cand: dict, suspicion: float = 0.0) -> dict:
     flags = _collect_flags(cand, components)
 
     return {
-        "total": round(total, 6),
+        "total": round(total, 4),
         "components": components,
         "flags": flags,
     }
