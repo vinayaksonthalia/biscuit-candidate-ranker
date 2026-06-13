@@ -54,7 +54,10 @@ python validate_submission.py submission.csv
 
 ```bash
 docker build -t biscuit .
-docker run -v $(pwd)/data:/app/data biscuit
+# Mount the directory containing candidates.jsonl to /app/
+docker run -v $(pwd):/app biscuit
+# Or mount just the file:
+# docker run -v /path/to/candidates.jsonl:/app/candidates.jsonl biscuit
 ```
 
 ## Reproduce Command (per spec)
