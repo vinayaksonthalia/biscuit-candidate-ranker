@@ -10,6 +10,22 @@ from datetime import datetime
 from . import config
 
 
+def _get_robust_yoe(cand: dict) -> float:
+    """
+    Returns a robust estimate of years of experience.
+    If the self-reported profile YoE differs significantly (>1.5 years)
+    from the sum of dated career history jobs, we trust the career history sum.
+    """
+    profile = cand.get("profile", {})
+    yoe = profile.get("years_of_experience", 0)
+    career = cand.get("career_history", [])
+    sum_dur = sum(job.get("duration_months", 0) for job in career) / 12.0
+    
+    if abs(yoe - sum_dur) > 1.5:
+        return sum_dur
+    return yoe
+
+
 def score_candidate(cand: dict, suspicion: float = 0.0) -> dict:
     """
     Compute a composite score for a candidate.
@@ -88,22 +104,14 @@ def _score_career_relevance(cand: dict) -> float:
         # Classify company
         if company in config.SERVICE_CONSULTING_COMPANIES:
             services_months += dur
-        elif (
-            company in config.PRODUCT_COMPANIES
-            or company in config.FICTIONAL_PRODUCT_COMPANIES
-        ):
+        elif company in config.PRODUCT_COMPANIES:
             product_months += dur
         else:
-            # Unknown company — check company size and industry as heuristic
+            # Fallback for unexpected companies
             industry = job.get("industry", "").lower()
-            size = job.get("company_size", "")
             if "it services" in industry or "consulting" in industry:
                 services_months += dur
-            elif size in ("1-10", "11-50", "51-200"):
-                # Small company = likely startup/product
-                product_months += dur * 0.6
             else:
-                # Neutral — give partial credit
                 product_months += dur * 0.3
 
         # Check if title is ML/AI-related
@@ -263,7 +271,7 @@ def _score_experience_band(cand: dict) -> float:
 
     Uses a smooth curve centered on the 6-8 year ideal band.
     """
-    yoe = cand.get("profile", {}).get("years_of_experience", 0)
+    yoe = _get_robust_yoe(cand)
 
     if config.EXPERIENCE_IDEAL_MIN <= yoe <= config.EXPERIENCE_IDEAL_MAX:
         return 1.0
@@ -483,7 +491,7 @@ def _collect_flags(cand: dict, components: dict) -> list:
         flags.append("ideal_experience_band")
 
     # Concerns
-    yoe = profile.get("years_of_experience", 0)
+    yoe = _get_robust_yoe(cand)
     if yoe < 4:
         flags.append(f"concern:junior_{yoe:.1f}yr")
     elif yoe > 12:

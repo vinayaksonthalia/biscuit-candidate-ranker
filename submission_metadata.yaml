@@ -15,7 +15,7 @@ team_members:
 
 github_repo: "https://github.com/vinayaksonthalia/biscuit-candidate-ranker"
 
-sandbox_link: ""  # TODO: Add HuggingFace Spaces / Streamlit link
+sandbox_link: "https://colab.research.google.com/github/vinayaksonthalia/biscuit-candidate-ranker/blob/main/sandbox/sandbox_notebook.ipynb"
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 

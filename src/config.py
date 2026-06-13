@@ -76,28 +76,35 @@ SERVICE_CONSULTING_COMPANIES = {
     "tcs", "infosys", "wipro", "accenture", "cognizant", "capgemini",
     "hcl", "tech mahindra", "mindtree", "mphasis", "l&t infotech",
     "hexaware", "persistent systems", "cyient", "zensar",
+    "genpact ai", "genpact",
 }
 
 # Known product/tech companies (positive signal)
 PRODUCT_COMPANIES = {
+    # Global Tech Product Companies
     "google", "meta", "facebook", "amazon", "microsoft", "apple",
     "netflix", "uber", "airbnb", "stripe", "spotify", "twitter",
     "linkedin", "salesforce", "adobe", "atlassian", "shopify",
+    # Indian Product Startups & Unicorns
     "flipkart", "swiggy", "zomato", "razorpay", "cred",
     "phonepe", "paytm", "ola", "meesho", "groww", "zerodha",
     "freshworks", "zoho", "postman", "browserstack", "chargebee",
     "hasura", "druva", "icertis", "innovaccer", "unacademy",
+    "byju's", "dream11", "nykaa", "inmobi", "policybazaar", "vedantu",
+    "pharmeasy", "upgrad", "glance",
+    # AI/ML Indian Product Companies
+    "rephrase.ai", "aganitha", "niramai", "saarthi.ai", "sarvam ai",
+    "mad street den", "observe.ai", "krutrim", "wysa", "haptik",
+    "yellow.ai", "verloop.io", "locobuzz",
     # Redrob itself
     "redrob",
+    # Fictional Product Companies
+    "stark industries", "wayne enterprises", "pied piper",
+    "hooli", "globex inc", "initech", "acme corp", "dunder mifflin",
 }
 
-# Fictional companies in the dataset that are treated as product companies
-# (they have product-style descriptions in career histories)
-FICTIONAL_PRODUCT_COMPANIES = {
-    "stark industries", "wayne enterprises", "pied piper",
-    "hooli", "globex inc", "initech", "acme corp",
-    "dunder mifflin",
-}
+# Kept for backward compatibility in imports
+FICTIONAL_PRODUCT_COMPANIES = set()
 
 # =============================================================================
 # ML/AI Title Keywords
