@@ -424,7 +424,7 @@ def _score_behavioral(cand: dict) -> float:
     if signals.get("linkedin_connected", False):
         verified += 0.3
 
-    # Weighted combination
+    # Weighted combination (core behavioral signals)
     score = (
         recency * 0.30
         + response_score * 0.20
@@ -434,6 +434,29 @@ def _score_behavioral(cand: dict) -> float:
         + interview_score * 0.10
         + verified * 0.10
     )
+
+    # Supplementary signals — small additive bonus for tiebreaking.
+    # Capped at 0.02 total so they can't override the core weights.
+    supp = 0.0
+
+    # 8. Offer reliability — candidates who accept offers follow through
+    offer_rate = signals.get("offer_acceptance_rate", -1)
+    if offer_rate >= 0:  # -1 means no data
+        supp += max(0.0, (offer_rate - 0.4)) * 0.02  # max ~0.012
+
+    # 9. Response speed — lower hours = more engaged
+    resp_hours = signals.get("avg_response_time_hours", 48)
+    supp += max(0.0, (1.0 - resp_hours / 120.0)) * 0.006  # max ~0.006
+
+    # 10. Market visibility — platform ranks them higher
+    appearances = signals.get("search_appearance_30d", 0)
+    supp += min(0.003, appearances / 100000.0)
+
+    # 11. Recruiter interest — others find them valuable
+    views = signals.get("profile_views_received_30d", 0)
+    supp += min(0.002, views / 30000.0)
+
+    score += min(0.02, supp)
 
     return round(min(1.0, max(0.0, score)), 4)
 
