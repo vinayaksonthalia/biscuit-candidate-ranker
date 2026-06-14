@@ -136,6 +136,12 @@ def _score_career_relevance(cand: dict) -> float:
     # Blend in description relevance (up to 0.15 bonus)
     score = min(1.0, score + desc_ml_score * 0.15)
 
+    # Ownership language bonus: JD says "has shipped at least one
+    # end-to-end ranking/search/recommendation system to real users."
+    # Rewards active builder language over passive participation.
+    ownership_score = _ownership_language_score(career)
+    score = min(1.0, score + ownership_score * 0.08)
+
     return round(min(1.0, max(0.0, score)), 4)
 
 
@@ -167,6 +173,47 @@ def _description_ml_relevance(career: list) -> float:
         return 0.0
     avg_hits = total_hits / total_jobs
     return min(1.0, avg_hits / 3.0)
+
+
+def _ownership_language_score(career: list) -> float:
+    """Score active ownership language in career descriptions.
+
+    The JD explicitly requires: 'Has shipped at least one end-to-end
+    ranking, search, or recommendation system to real users at meaningful
+    scale.' This differentiates builders from participants.
+    """
+    ownership_phrases = {
+        "shipped", "launched", "deployed", "built", "architected",
+        "designed and implemented", "owned", "led the development",
+        "production", "serving", "at scale", "end-to-end",
+        "a/b test", "improved", "reduced latency", "increased",
+    }
+    participation_phrases = {
+        "worked on", "assisted", "familiar with", "exposure to",
+        "helped with", "contributed to",
+    }
+    own_count = 0
+    part_count = 0
+    total_jobs = 0
+
+    for job in career:
+        desc = job.get("description", "").lower()
+        if not desc:
+            continue
+        total_jobs += 1
+        own_count += sum(1 for p in ownership_phrases if p in desc)
+        part_count += sum(1 for p in participation_phrases if p in desc)
+
+    if total_jobs == 0:
+        return 0.0
+
+    total = own_count + part_count
+    if total == 0:
+        return 0.3  # No language either way — neutral
+
+    # Ratio of ownership to total language signals
+    ratio = own_count / total
+    return min(1.0, ratio)
 
 
 def _score_skills_match(cand: dict) -> float:
@@ -238,10 +285,20 @@ def _score_skills_match(cand: dict) -> float:
     # Negative domain penalty
     negative_penalty = min(0.3, len(negative_matches) * 0.1)
 
-    # Assessment scores bonus (from Redrob platform)
+    # Endorsement bonus: total endorsements across ALL JD-relevant skills.
+    # Top-100 candidates average ~200 endorsements vs ~5 for the rest.
+    # This rewards both breadth (more relevant skills) and community
+    # validation without penalizing candidates with many skills.
+    total_relevant_endorsements = sum(
+        skill_details.get(s, {}).get("endorsements", 0)
+        for s in core_matches | nice_matches
+    )
+    endorsement_bonus = min(0.08, total_relevant_endorsements / 2500.0)
+
+    # Assessment scores bonus (from Redrob platform — verified, not self-reported)
     assessment_bonus = _assessment_bonus(cand, core_matches | nice_matches)
 
-    score = core_normalized + nice_bonus + adjacent_bonus + assessment_bonus - negative_penalty
+    score = core_normalized + nice_bonus + adjacent_bonus + assessment_bonus + endorsement_bonus - negative_penalty
 
     return round(min(1.0, max(0.0, score)), 4)
 
