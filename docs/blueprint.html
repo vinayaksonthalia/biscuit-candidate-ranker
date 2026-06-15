@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biscuit — Intelligent Candidate Ranking Blueprint</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Variables & Theme */
+        :root {
+            --bg-color: #0b0f19;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --primary: #6366f1;
+            --primary-light: #818cf8;
+            --primary-dark: #4f46e5;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --card-bg: rgba(30, 41, 59, 0.4);
+            --card-border: rgba(148, 163, 184, 0.1);
+            --font-display: 'Outfit', -apple-system, sans-serif;
+            --font-body: 'Inter', -apple-system, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(16, 185, 129, 0.03) 0%, transparent 40%);
+        }
+
+        /* Slide Container & Navigation */
+        #deck-container {
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            width: 100%;
+            height: 85%;
+        }
+
+        .slide {
+            position: absolute;
+            width: 90%;
+            max-width: 1200px;
+            height: 90%;
+            max-height: 680px;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            opacity: 0;
+            transform: scale(0.95) translateY(20px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), 
+                        transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            backdrop-filter: blur(16px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+            pointer-events: auto;
+            z-index: 10;
+        }
+
+        /* Header / Footer Design */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-tag {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--primary-light);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            background: rgba(99, 102, 241, 0.1);
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+        }
+
+        .slide-title {
+            font-family: var(--font-display);
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.02em;
+        }
+
+        .slide-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
+        }
+
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* UI Elements & Helpers */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--card-border);
+        }
+
+        .btn-nav {
+            background: rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            cursor: pointer;
+            font-family: var(--font-display);
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-nav:hover:not(:disabled) {
+            background: var(--primary);
+            border-color: var(--primary-light);
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-nav:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .progress-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: var(--primary-light);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px var(--primary-light);
+        }
+
+        /* Grid / Layout Helpers */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 1.5rem;
+            transition: border-color 0.3s;
+        }
+
+        .card:hover {
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+
+        .card-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: #ffffff;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .highlight-text {
+            color: var(--primary-light);
+            font-weight: 600;
+        }
+
+        .bullet-list {
+            list-style-type: none;
+        }
+
+        .bullet-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .bullet-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary-light);
+            font-weight: bold;
+        }
+
+        /* Specific Component Designs */
+        .code-box {
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: #38bdf8;
+            overflow-x: auto;
+        }
+
+        .metric-badge {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        .warning-badge {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
+
+        /* Title Slide styling */
+        .title-slide-layout {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            gap: 1.5rem;
+        }
+
+        .title-slide-layout h1 {
+            font-family: var(--font-display);
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            background: linear-gradient(135deg, #ffffff 40%, var(--primary-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .title-slide-layout h2 {
+            font-family: var(--font-body);
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+        }
+
+        .metadata-box {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Printing adjustments */
+        @media print {
+            body {
+                background: #000000 !important;
+                color: #ffffff !important;
+                overflow: visible !important;
+                height: auto !important;
+            }
+
+            #deck-container {
+                display: block !important;
+                height: auto !important;
+            }
+
+            .slide {
+                position: relative !important;
+                opacity: 1 !important;
+                transform: none !important;
+                display: flex !important;
+                page-break-after: always !important;
+                page-break-inside: avoid !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                max-width: none !important;
+                max-height: none !important;
+                border: none !important;
+                background: #000000 !important;
+                box-shadow: none !important;
+                border-radius: 0 !important;
+                padding: 4rem !important;
+            }
+
+            .controls {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="deck-container">
+
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active" id="slide-1">
+            <header>
+                <span class="slide-tag">Hackathon Submission</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">01/10</span>
+            </header>
+            <div class="slide-content">
+                <div class="title-slide-layout">
+                    <h1>BISCUIT</h1>
+                    <h2>Intelligent Candidate Discovery & Ranking Pipeline</h2>
+                    <p style="font-size: 1.1rem; color: var(--primary-light); font-weight: 500;">
+                        Built for Senior AI Engineer (Founding Team) @ Redrob AI
+                    </p>
+                    <div class="metadata-box">
+                        <div><span>Team:</span> <strong style="color: white;">Biscuit</strong></div>
+                        <div><span>Author:</span> <strong style="color: white;">Vinayak Sonthalia</strong></div>
+                        <div><span>Language:</span> <strong style="color: white;">Python 3.11</strong></div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Press Right Arrow to begin</span>
+            </footer>
+        </div>
+
+        <!-- Slide 2: Problem & Requirements Analysis -->
+        <div class="slide" id="slide-2">
+            <header>
+                <span class="slide-tag">Problem Definition</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">02/10</span>
+            </header>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Role Requirements</h2>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">Shipper over Researcher:</strong> Prefers hands-on product implementation over purely academic research.</li>
+                            <li><strong style="color: white;">Deep ML & IR Expertise:</strong> Requires embeddings, vector search, recommendations, information retrieval (IR), and hybrid search.</li>
+                            <li><strong style="color: white;">Rigorous Evaluation:</strong> Familiarity with NDCG, MRR, MAP, offline benchmarking, and online A/B testing is vital.</li>
+                            <li><strong style="color: white;">Experience:</strong> Target is 5-9 years, with 6-8 years total and 4-5 years at product companies as ideal.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--accent);">
+                            <span>⚙️ Compute Budget & Constraints</span>
+                        </div>
+                        <ul class="bullet-list" style="margin-top: 0.5rem;">
+                            <li><strong style="color: white;">CPU-Only:</strong> Must rank 100K candidates without GPU acceleration.</li>
+                            <li><strong style="color: white;">Time Limit:</strong> Under 5 minutes (our implementation runs in <strong class="highlight-text">~10 seconds</strong>!).</li>
+                            <li><strong style="color: white;">Zero Network:</strong> No live LLM calls (e.g. OpenAI/Claude API) during the ranking step.</li>
+                            <li><strong style="color: white;">Memory Limit:</strong> Under 16 GB RAM (our streaming implementation runs under <strong class="highlight-text">500 MB</strong>).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 2 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 3: Dataset Traps & Defenses -->
+        <div class="slide" id="slide-3">
+            <header>
+                <span class="slide-tag">Dataset Defense</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">03/10</span>
+            </header>
+            <div class="slide-content">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Defense-in-Depth Against Adversarial Profiles</h2>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                    The dataset contains intentional traps and noise. Our pipeline applies a multi-layered defense to isolate them.
+                </p>
+                <div class="grid-3">
+                    <div class="card">
+                        <div class="card-title" style="color: var(--danger);">1. Honeypots</div>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+                            Profiles with completely impossible timelines or inflated metrics designed to fool naive semantic search.
+                        </p>
+                        <span class="warning-badge">Hard Filtered (42 caught)</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #f59e0b;">2. Keyword Stuffers</div>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+                            Candidates listing dozens of expert-level AI keywords (Pinecone, BERT) but carrying non-technical titles (Marketing Manager, Accountant).
+                        </p>
+                        <span class="warning-badge" style="color:#f59e0b; border-color:rgba(245,158,11,0.2); background:rgba(245,158,11,0.1);">Capped Score to 0.05</span>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #60a5fa;">3. Services Careers</div>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
+                            Candidates who have spent their entire career at consulting/IT services firms (TCS, Infosys, Accenture) representing a culture-fit risk.
+                        </p>
+                        <span class="warning-badge" style="color:#60a5fa; border-color:rgba(96,165,250,0.2); background:rgba(96,165,250,0.1);">Proportional Penalties</span>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 3 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 4: Pipeline Architecture -->
+        <div class="slide" id="slide-4">
+            <header>
+                <span class="slide-tag">Architecture</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">04/10</span>
+            </header>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Four-Stage Ranking Pipeline</h2>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">Stage 0 (Stream Loader):</strong> Parses candidates line-by-line using standard Python generators. Eliminates high peak memory, scaling seamlessly to 100K+ profiles.</li>
+                            <li><strong style="color: white;">Stage 1 (Hard Filtering):</strong> Eliminates the 42 definitively impossible honeypots using strict deterministic rules.</li>
+                            <li><strong style="color: white;">Stage 2 (6-Dimension Scorer):</strong> Computes normalized sub-scores for each candidate. Applies suspicion multipliers to borderline cases.</li>
+                            <li><strong style="color: white;">Stage 3 (Deterministic Ranker):</strong> Sorts candidates descending by score and breaks ties ascending by candidate ID. Generates varied reasoning using MD5-based deterministic seeding.</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="font-family: var(--font-mono); font-size: 0.75rem; color: #a5b4fc; background: #020617; line-height: 1.4; border: 1px solid rgba(99, 102, 241, 0.2);">
+                        <div>[INPUT] candidates.jsonl</div>
+                        <div style="color: #475569;">  │</div>
+                        <div style="color: #6366f1;">  ▼ (Stage 0: Streaming loader.py)</div>
+                        <div>  Stream Candidate Object</div>
+                        <div style="color: #475569;">  │</div>
+                        <div style="color: #ef4444;">  ▼ (Stage 1: filters.py - is_honeypot?)</div>
+                        <div>  [True]  → Discard (42 honeypots caught)</div>
+                        <div>  [False] → Compute suspicion multiplier [0.0 - 0.3]</div>
+                        <div style="color: #475569;">  │</div>
+                        <div style="color: #10b981;">  ▼ (Stage 2: scorer.py)</div>
+                        <div>  Calculate weighted sum across 6 dimensions</div>
+                        <div>  Final Score = Weighted Sum * (1.0 - Suspicion)</div>
+                        <div style="color: #475569;">  │</div>
+                        <div style="color: #818cf8;">  ▼ (Stage 3: ranker.py)</div>
+                        <div>  Sort, Tie-break, Generate reasoning (hashlib seed)</div>
+                        <div style="color: #475569;">  │</div>
+                        <div>[OUTPUT] submission.csv (Top 100)</div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 4 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 5: Stage 1: Honeypot & Suspicion Engine -->
+        <div class="slide" id="slide-5">
+            <header>
+                <span class="slide-tag">Stage 1 Filter</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">05/10</span>
+            </header>
+            <div class="slide-content">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Defensive Filtering & Borderline Suspicion</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title" style="color: var(--danger); font-size: 1.1rem;">🚫 1. Hard Honeypot Filters (Caught: 42)</div>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-top: 0.5rem;">
+                            If a candidate meets any of these 3 impossible criteria, they are immediately discarded:
+                        </p>
+                        <ul class="bullet-list" style="margin-top: 0.5rem;">
+                            <li><strong style="color: white;">Zero-Duration Experts:</strong> Expert in 3+ skills with exactly 0 months of stated experience.</li>
+                            <li><strong style="color: white;">YoE Breakers:</strong> Stated duration of a single job exceeds total self-reported years of experience.</li>
+                            <li><strong style="color: white;">Timeline Breakers:</strong> Stated duration of a single job exceeds the calendar dates by more than 12 months.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #f59e0b; font-size: 1.1rem;">⚠️ 2. Borderline Suspicion Penalty</div>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-top: 0.5rem;">
+                            For profiles that are highly suspicious but not provably impossible. They are penalized by a multiplier:
+                        </p>
+                        <ul class="bullet-list" style="margin-top: 0.5rem;">
+                            <li><strong style="color: white;">Borderline Zero-Duration (-0.15):</strong> Expert in 1-2 skills with 0 months of experience.</li>
+                            <li><strong style="color: white;">Minor Timeline Mismatches (-0.10):</strong> Stated job duration exceeds calendar span by 6-12 months.</li>
+                            <li><strong style="color: white;">Extreme Skill Durations (-0.05):</strong> Stated skill duration exceeds total career span by 2.5x.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 5 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 6: Stage 2: Scoring Framework -->
+        <div class="slide" id="slide-6">
+            <header>
+                <span class="slide-tag">Stage 2 Scorer</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">06/10</span>
+            </header>
+            <div class="slide-content">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Composite Scoring Framework</h2>
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
+                    Scores candidates on a scale of 0.0 to 1.0 across six core dimensions derived directly from the Job Description.
+                </p>
+                <div class="grid-3" style="font-size: 0.85rem;">
+                    <div class="card">
+                        <div class="card-title" style="color: #818cf8; font-size: 1rem;">Career Relevance (30%)</div>
+                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
+                            Calculates ratio of time at product vs services companies. Checks titles for AI/ML keywords, searches descriptions for ML terms, and rewards ownership/shipping verbs.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #818cf8; font-size: 1rem;">Skills Match (25%)</div>
+                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
+                            Weights core must-haves (embeddings, vector search, evaluation metrics). Penalizes negative domain match (computer vision, robotics). Rewards skill assessments and peer endorsements.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #818cf8; font-size: 1rem;">Experience Band (15%)</div>
+                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
+                            Uses a smooth Gaussian-like curve centered on the 6-8 year ideal range. Evaluated against <strong style="color: white;">Robust YoE</strong> to prevent self-reported experience padding.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #10b981; font-size: 1rem;">Behavioral Signals (15%)</div>
+                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
+                            Combines profile recency, recruiter response rate, profile completeness, GitHub activity score, open-to-work flag, and prior interview completion rate.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #10b981; font-size: 1rem;">Location & Logistics (10%)</div>
+                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
+                            Rewards Noida/Pune residency. Considers relocation willingness. Scores notice period: buyouts for sub-30d get bonuses, while >90d notice periods are penalized.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #10b981; font-size: 1rem;">Education Quality (5%)</div>
+                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
+                            Tier-1 (IIT, NIT, Stanford, etc.) and Tier-2 institution classification. Checks relevance of field of study. Applies heavy penalties for PhD wrong field matches.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 6 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 7: Algorithmic Innovations -->
+        <div class="slide" id="slide-7">
+            <header>
+                <span class="slide-tag">Algorithmic Design</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">07/10</span>
+            </header>
+            <div class="slide-content">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Key Innovations for Robust Alignment</h2>
+                <div class="grid-3" style="font-size: 0.85rem;">
+                    <div class="card">
+                        <div class="card-title" style="color: #a78bfa;">1. Robust YoE Estimation</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Self-reported years of experience is often inflated (e.g. 16.2 years vs. 8.17 years actual career span).
+                        </p>
+                        <p style="color: var(--text-primary); line-height: 1.5; margin-top: 0.5rem;">
+                            Our algorithm cross-validates self-reported YoE against the sum of dated career jobs. If they differ by >1.5 years, we trust the career history sum.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #a78bfa;">2. Exact Company Mapping</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Consulting careers carry a heavy culture-fit penalty. Classifying companies via heuristics is prone to errors.
+                        </p>
+                        <p style="color: var(--text-primary); line-height: 1.5; margin-top: 0.5rem;">
+                            We fully mapped the 63 unique companies present in the candidate database, identifying exactly <strong style="color: white;">52 product/tech companies</strong> and <strong style="color: white;">11 consulting/services firms</strong>.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #a78bfa;">3. Active Builder Language</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Participants often describe projects passively ("helped with", "assisted"). The JD requires active builders.
+                        </p>
+                        <p style="color: var(--text-primary); line-height: 1.5; margin-top: 0.5rem;">
+                            Our lexical parser detects active verbs ("shipped", "built", "architected", "deployed", "A/B tested", "at scale") to boost candidates with verified ownership.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 7 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 8: Tie-Breaking & Reasoning -->
+        <div class="slide" id="slide-8">
+            <header>
+                <span class="slide-tag">Deterministic Outputs</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">08/10</span>
+            </header>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Reproducible Rank & Reasoning</h2>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">Strict Tie-Breaking:</strong> Sorts descending by score, ascending by candidate ID. Ensures unique, reproducible ranks (no random shifts).</li>
+                            <li><strong style="color: white;">No Network LLMs:</strong> Reasoning is generated deterministically on the local CPU without expensive network calls.</li>
+                            <li><strong style="color: white;">Deterministic Seeding:</strong> Computes an MD5 hash of the candidate ID to seed the randomizer per-candidate. The same candidate gets the same reasoning across runs, while ensuring variation across candidates.</li>
+                            <li><strong style="color: white;">Structured Variation:</strong> Uses 5 distinct sentence templates. Prioritizes strong facts (skills, career) over weak supporting details. Preserves proper noun casing (IIT, Meta).</li>
+                        </ul>
+                    </div>
+                    <div class="card" style="font-family: var(--font-mono); font-size: 0.8rem; background: #020617; border: 1px solid rgba(99, 102, 241, 0.2);">
+                        <div style="color: #a5b4fc; font-weight: 600; margin-bottom: 0.5rem;">Sample Generated Reasonings:</div>
+                        <div style="margin-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                            <span style="color: #38bdf8;">Rank 1 (CAND_0018499):</span><br>
+                            "Notably, Brings Learning To Rank, Qlora experience. 7 years of experience, currently Senior Machine Learning Engineer at Zomato."
+                        </div>
+                        <div style="margin-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
+                            <span style="color: #38bdf8;">Rank 2 (CAND_0052328):</span><br>
+                            "Brings Fine-Tuning Llms, Learning To Rank experience, complemented by Stanford University graduate (Tier-1)."
+                        </div>
+                        <div>
+                            <span style="color: #38bdf8;">Rank 15 (CAND_0010257):</span><br>
+                            "Strong fit for the Senior AI Engineer role — Previously Search Engineer at PharmEasy; Built embedding-based systems at Google. Concern: 120-day notice period exceeds JD's preferred 30-day window."
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 8 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 9: Results & Performance -->
+        <div class="slide" id="slide-9">
+            <header>
+                <span class="slide-tag">Performance</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">09/10</span>
+            </header>
+            <div class="slide-content">
+                <h2 class="slide-title" style="margin-bottom: 1rem;">Verification & Submission Results</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <div class="card-title" style="color: var(--accent);">📊 Challenge Validation Status</div>
+                        <ul class="bullet-list" style="margin-top: 0.5rem;">
+                            <li><strong style="color: white;">Format Validator:</strong> Passed local validation using <code style="color: #38bdf8; font-family: var(--font-mono);">validate_submission.py</code>. Row counts, ranks, score monotonicity, and columns match exactly.</li>
+                            <li><strong style="color: white;">Zero Honeypots:</strong> Evaluated top 100 results against 42 confirmed honeypots. <code style="color: var(--accent); font-weight: bold;">0% honeypot rate</code> achieved.</li>
+                            <li><strong style="color: white;">Reproducibility:</strong> Runs generated across different trials have 100% identical outputs (CSV hash verified).</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary-light);">⚡ Runtime Efficiency Metrics</div>
+                        <div style="font-size: 1.8rem; font-weight: 700; color: white; margin: 1rem 0;">
+                            ~9.8 Seconds <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400;">to score and rank 100,000 candidates</span>
+                        </div>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">RAM Consumption:</strong> Under 500 MB peak. Easily fits within the 16 GB constraint.</li>
+                            <li><strong style="color: white;">CPU Scaling:</strong> Stream parsing executes on 1 CPU core without parallel overhead.</li>
+                            <li><strong style="color: white;">No Precomputation:</strong> Executes end-to-end directly from raw candidates file.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 9 of 10</span>
+            </footer>
+        </div>
+
+        <!-- Slide 10: Future Vision -->
+        <div class="slide" id="slide-10">
+            <header>
+                <span class="slide-tag">Future Roadmap</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">10/10</span>
+            </header>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Future Roadmap</h2>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">Dynamic Score Calibration:</strong> Integrate a validation set of ranked candidates to automatically optimize dimensions weights (rather than heuristic tuning).</li>
+                            <li><strong style="color: white;">Semantic Parsing of Careers:</strong> Deploy a lightweight local model (e.g. a small BERT model running locally) to parse career histories for semantic concepts, replacing lexical matches.</li>
+                            <li><strong style="color: white;">Automated Entity Syncing:</strong> Pull latest Crunchbase/Linkedin data periodically to keep company classifications (product vs service, founder dates) dynamically updated.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary-light);">💡 Key Learning</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; margin-top: 0.5rem;">
+                            Building candidate discoveries requires looking past the keywords. By combining behavioral signals (availability) with career trajectory validation (robust experience, product context), we achieve a ranking that mirrors a professional recruiter's judgment, rather than an inflated skill list.
+                        </p>
+                        <p style="color: white; font-weight: 600; margin-top: 1rem; font-family: var(--font-display);">
+                            Thank you! — Team Biscuit
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 10 of 10</span>
+            </footer>
+        </div>
+
+    </div>
+
+    <!-- Slide Navigation controls -->
+    <div class="controls no-print">
+        <button class="btn-nav" id="prev-btn" disabled>
+            ← Previous
+        </button>
+        <div class="progress-dots" id="dots-container">
+            <!-- Dots populated via script -->
+        </div>
+        <button class="btn-nav" id="next-btn">
+            Next →
+        </button>
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const dotsContainer = document.getElementById('dots-container');
+        
+        let currentSlide = 0;
+
+        // Initialize dots
+        slides.forEach((slide, index) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (index === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(index));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll('.dot');
+
+        function updateButtons() {
+            prevBtn.disabled = currentSlide === 0;
+            nextBtn.disabled = currentSlide === slides.length - 1;
+            
+            dots.forEach((dot, index) => {
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = index;
+            slides[currentSlide].classList.add('active');
+            updateButtons();
+        }
+
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                goToSlide(currentSlide - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentSlide < slides.length - 1) {
+                goToSlide(currentSlide + 1);
+            }
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < slides.length - 1) {
+                    goToSlide(currentSlide + 1);
+                }
+            } else if (e.key === 'ArrowLeft') {
+                if (currentSlide > 0) {
+                    goToSlide(currentSlide - 1);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

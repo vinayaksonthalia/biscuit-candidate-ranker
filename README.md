@@ -66,6 +66,18 @@ docker run -v $(pwd):/app biscuit
 python rank.py --candidates ./candidates.jsonl --out ./submission.csv
 ```
 
+## Presentation Deck
+
+The required presentation explaining our approach, architecture, and design decisions is located at:
+- [docs/blueprint.html](file:///Users/vinayak/Documents/devlopment/biscuit-candidate-ranker/docs/blueprint.html) (Interactive HTML Slideshow)
+
+**How to export to PDF:**
+1. Open [docs/blueprint.html](file:///Users/vinayak/Documents/devlopment/biscuit-candidate-ranker/docs/blueprint.html) in Chrome, Safari, or Edge.
+2. Press `Cmd + P` (Mac) or `Ctrl + P` (Windows/Linux) to open the print dialog.
+3. Select **Destination: Save as PDF** and set layout to **Landscape**.
+4. Check **Background graphics** and save as `blueprint.pdf`.
+5. (A pre-rendered PDF can be uploaded directly to the portal).
+
 ## Design Decisions
 
 - **Streaming loader**: Line-by-line JSONL parsing keeps RAM under 500MB for 100K candidates.
