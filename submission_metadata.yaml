@@ -40,14 +40,16 @@ ai_usage_summary: |
   data was fed to any LLM. All ranking logic is deterministic Python code.
 
 methodology_summary: |
-  Multi-stage deterministic ranking pipeline. Stage 1 eliminates honeypots
-  (impossible timelines/metrics), dead leads (inactive 6+ months), and hard
-  JD disqualifiers (pure consulting, non-ML domains). Stage 2 computes a
+  Multi-stage deterministic ranking pipeline. Stage 1 hard-eliminates
+  profiles with impossible timelines or skill-duration claims, then computes
+  suspicion penalties for borderline inconsistencies. Stage 2 computes a
   composite score from career relevance (product vs services), skills match
   (core IR/NLP/ML vs fringe), experience band fit (5-9 years), behavioral
-  engagement signals, and location/logistics alignment. Stage 3 ranks the
-  top 100 and generates fact-grounded, varied reasoning per candidate.
-  Runtime: ~10 seconds on CPU, zero network, zero GPU.
+  engagement signals, and location/logistics alignment. Dead leads, pure
+  consulting careers, and non-ML domains are down-weighted rather than
+  blindly removed. Stage 3 ranks the top 100 and generates fact-grounded,
+  varied reasoning per candidate. Runtime is well within the 5-minute CPU
+  budget, with zero network and zero GPU.
 
 declarations:
   read_submission_spec: true

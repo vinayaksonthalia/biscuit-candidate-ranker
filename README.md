@@ -1,6 +1,6 @@
 # Biscuit — Intelligent Candidate Ranking System
 
-A deterministic, CPU-only candidate ranking engine for the India Runs Data & AI Challenge. Processes 100K candidates in <10 seconds, producing a top-100 shortlist with fact-grounded reasoning.
+A deterministic, CPU-only candidate ranking engine for the India Runs Data & AI Challenge. Processes 100K candidates well within the 5-minute CPU budget, producing a top-100 shortlist with fact-grounded reasoning.
 
 ## Architecture
 
@@ -49,6 +49,8 @@ python rank.py --candidates ./candidates.jsonl --out ./submission.csv
 # Validate output
 python validate_submission.py submission.csv
 ```
+
+If your local machine only exposes Python 3 as `python3`, use `python3` in the commands above. The Docker image and Colab sandbox use `python`.
 
 ## Docker
 
