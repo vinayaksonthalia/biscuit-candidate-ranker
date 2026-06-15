@@ -561,6 +561,7 @@ def _collect_flags(cand: dict, components: dict) -> list:
     profile = cand.get("profile", {})
     signals = cand.get("redrob_signals", {})
     career = cand.get("career_history", [])
+    skills = cand.get("skills", [])
 
     # Highlights
     if components["career_relevance"] >= 0.8:
@@ -596,5 +597,19 @@ def _collect_flags(cand: dict, components: dict) -> list:
     country = profile.get("country", "").lower()
     if config.PREFERRED_COUNTRY not in country:
         flags.append("concern:outside_india")
+
+    # Borderline concerns — for candidates who are good but not great.
+    # These only appear in reasoning text, not scoring.
+    skill_names = {s.get("name", "").lower() for s in skills}
+    core_count = len(skill_names & config.CORE_MUST_HAVE_SKILLS)
+    if core_count < 4:
+        flags.append(f"concern:few_core_skills_{core_count}")
+
+    response_rate = signals.get("recruiter_response_rate", 0)
+    if 0.1 < response_rate < 0.5:
+        flags.append(f"concern:low_response_{response_rate:.0%}")
+
+    if components["behavioral_signals"] < 0.5 and components["behavioral_signals"] >= 0.3:
+        flags.append("concern:moderate_engagement")
 
     return flags

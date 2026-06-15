@@ -317,5 +317,23 @@ def _extract_concerns(cand: dict, flags: list) -> list:
             concerns.append(
                 "Note: located outside India — JD states no visa sponsorship"
             )
+        elif concern_type.startswith("few_core_skills_"):
+            count = concern_type.split("_")[-1]
+            concerns.append(
+                f"Note: matches {count} core JD skills — fewer than "
+                f"top-ranked candidates"
+            )
+        elif concern_type.startswith("low_response_"):
+            rate = concern_type.split("_")[-1]
+            concerns.append(
+                f"Note: {rate} recruiter response rate may indicate "
+                f"limited availability"
+            )
+        elif concern_type == "moderate_engagement":
+            concerns.append(
+                "Note: moderate platform engagement — may need "
+                "proactive outreach"
+            )
 
     return concerns
+

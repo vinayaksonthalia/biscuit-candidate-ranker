@@ -132,6 +132,9 @@ KEYWORD_STUFFER_TITLES = {
     "administrative assistant", "office manager",
     "legal counsel", "lawyer",
     "recruiter", "talent acquisition specialist",
+    # Found via dataset audit — non-tech titles with AI skill inflation
+    "business analyst", "project manager", "operations manager",
+    "sales executive",
 }
 
 # =============================================================================
