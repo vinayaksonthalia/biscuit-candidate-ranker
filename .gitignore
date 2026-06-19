@@ -26,6 +26,11 @@ env/
 # Outputs
 *.csv
 !sample_submission.csv
+!submission.csv
+
+# Challenge bundle — organizer dataset + IP, never commit (487MB candidates.jsonl)
+# Brackets escaped: [PUB] would otherwise be read as a glob character class.
+\[PUB\] India_runs_data_and_ai_challenge/
 
 # Temporary
 *.tmp

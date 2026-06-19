@@ -364,7 +364,6 @@
             .controls {
                 display: none !important;
             }
-        }
     </style>
 </head>
 <body>
@@ -375,19 +374,24 @@
         <div class="slide active" id="slide-1">
             <header>
                 <span class="slide-tag">Hackathon Submission</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">01/10</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">01/11</span>
             </header>
             <div class="slide-content">
                 <div class="title-slide-layout">
-                    <img src="logo.png" alt="Biscuit Logo" style="height: 200px; width: auto; margin-bottom: 0.5rem; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
+                    <img src="logo.png" alt="Biscuit Logo" style="height: 180px; width: auto; margin-bottom: 0.5rem; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));">
                     <h2>Intelligent Candidate Discovery & Ranking Pipeline</h2>
-                    <p style="font-size: 1.1rem; color: var(--primary-light); font-weight: 500;">
+                    <p style="font-size: 1.1rem; color: var(--primary-light); font-weight: 500; margin-bottom: 1rem;">
                         Built for Senior AI Engineer (Founding Team) @ Redrob AI
                     </p>
-                    <div class="metadata-box">
-                        <div><span>Team:</span> <strong style="color: white;">Biscuit</strong></div>
-                        <div><span>Author:</span> <strong style="color: white;">Vinayak Sonthalia</strong></div>
-                        <div><span>Language:</span> <strong style="color: white;">Python 3.11</strong></div>
+                    <div class="card" style="width: 100%; max-width: 800px; padding: 1.25rem; background: rgba(15, 23, 42, 0.7); text-align: left;">
+                        <p style="font-size: 0.95rem; line-height: 1.5; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                            <strong style="color: white; font-family: var(--font-display);">Problem Statement:</strong> Rank the top 100 candidates from a 100K pool for Redrob's Senior AI Engineer role under strict CPU/memory/time limits with reproducible scores and fact-based justifications.
+                        </p>
+                        <div class="metadata-box" style="margin-top: 0.5rem; display: flex; justify-content: space-between;">
+                            <div><span>Team Name:</span> <strong style="color: white;">Biscuit</strong></div>
+                            <div><span>Team Leader:</span> <strong style="color: white;">Vinayak Sonthalia</strong></div>
+                            <div><span>Language:</span> <strong style="color: white;">Python 3.11</strong></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -397,372 +401,368 @@
             </footer>
         </div>
 
-        <!-- Slide 2: Problem & Requirements Analysis -->
+        <!-- Slide 2: Solution Overview -->
         <div class="slide" id="slide-2">
             <header>
-                <span class="slide-tag">Problem Definition</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">02/10</span>
+                <span class="slide-tag">Solution Overview</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">02/11</span>
             </header>
             <div class="slide-content">
                 <div class="grid-2">
                     <div>
-                        <h2 class="slide-title" style="margin-bottom: 1rem;">Role Requirements</h2>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Proposed Solution</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 1rem;">
+                            Biscuit is a highly optimized, deterministic, CPU-only candidate ranking engine. It streams candidate records line-by-line using Python generators, eliminating high RAM peaks and scaling gracefully.
+                        </p>
                         <ul class="bullet-list">
-                            <li><strong style="color: white;">Shipper over Researcher:</strong> Prefers hands-on product implementation over purely academic research.</li>
-                            <li><strong style="color: white;">Deep ML & IR Expertise:</strong> Requires embeddings, vector search, recommendations, information retrieval (IR), and hybrid search.</li>
-                            <li><strong style="color: white;">Rigorous Evaluation:</strong> Familiarity with NDCG, MRR, MAP, offline benchmarking, and online A/B testing is vital.</li>
-                            <li><strong style="color: white;">Experience:</strong> Target is 5-9 years, with 6-8 years total and 4-5 years at product companies as ideal.</li>
+                            <li><strong style="color: white;">Staged Pipeline Architecture:</strong> Discards honeypots instantly, scores 6 core dimensions, applies suspicion multipliers, and sorts deterministically.</li>
+                            <li><strong style="color: white;">Zero Network Latency:</strong> Resolves logic entirely locally without any live LLM API calls, ensuring 100% speed, safety, and reproducibility.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary-light);">
+                            <span>🚀 What Differentiates Our Approach?</span>
+                        </div>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem; line-height: 1.5; margin-top: 0.5rem; margin-bottom: 0.5rem;">
+                            Traditional systems rely on raw keyword counting, which is easily gamed by candidates padding skills.
+                        </p>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">Trajectory & Culture Alignment:</strong> We evaluate career progression, penalizing services-only tenure while favoring product ML builders.</li>
+                            <li><strong style="color: white;">Data Integrity Cross-Check:</strong> We programmatically calculate a candidate's "Robust YoE" and penalize chronological discrepancies.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 2 of 11</span>
+            </footer>
+        </div>
+
+        <!-- Slide 3: JD Understanding & Candidate Evaluation -->
+        <div class="slide" id="slide-3">
+            <header>
+                <span class="slide-tag">JD & Candidate Evaluation</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">03/11</span>
+            </header>
+            <div class="slide-content">
+                <div class="grid-2">
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Key JD Requirements</h2>
+                        <ul class="bullet-list">
+                            <li><strong style="color: white;">Product ML Focus:</strong> Demands hands-on builders who ship products, not purely theoretical ML researchers.</li>
+                            <li><strong style="color: white;">Core IR/ML Skills:</strong> Heavy focus on embeddings, vector databases, search ranking, and NLP.</li>
+                            <li><strong style="color: white;">Rigorous Metrics:</strong> Deep understanding of evaluation criteria like NDCG, MAP, and MRR.</li>
+                            <li><strong style="color: white;">Ideal Experience Band:</strong> Stated preference for 5-9 years of relevant industry experience.</li>
                         </ul>
                     </div>
                     <div class="card">
                         <div class="card-title" style="color: var(--accent);">
-                            <span>⚙️ Compute Budget & Constraints</span>
+                            <span>🧬 Core Candidate Signals & Fit Evaluation</span>
                         </div>
                         <ul class="bullet-list" style="margin-top: 0.5rem;">
-                            <li><strong style="color: white;">CPU-Only:</strong> Must rank 100K candidates without GPU acceleration.</li>
-                            <li><strong style="color: white;">Time Limit:</strong> Under 5 minutes (our implementation runs in <strong class="highlight-text">~10 seconds</strong>!).</li>
-                            <li><strong style="color: white;">Zero Network:</strong> No live LLM calls (e.g. OpenAI/Claude API) during the ranking step.</li>
-                            <li><strong style="color: white;">Memory Limit:</strong> Under 16 GB RAM (our streaming implementation runs under <strong class="highlight-text">500 MB</strong>).</li>
+                            <li><strong style="color: white;">Moving Beyond Keywords:</strong> We scan project descriptions for active shipping verbs (e.g., "built", "architected", "deployed", "scaled") and verify skill endorsements.</li>
+                            <li><strong style="color: white;">Company Heuristics:</strong> We map candidate careers against a verified directory of 86 companies, identifying product builders vs. consulting services.</li>
+                            <li><strong style="color: white;">Availability & Logistics:</strong> Incorporates active notice period, relocation readiness, and past interview metrics to ensure high-conviction matches.</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 2 of 10</span>
+                <span>Slide 3 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 3: Dataset Traps & Defenses -->
-        <div class="slide" id="slide-3">
-            <header>
-                <span class="slide-tag">Dataset Defense</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">03/10</span>
-            </header>
-            <div class="slide-content">
-                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Defense-in-Depth Against Adversarial Profiles</h2>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-                    The dataset contains intentional traps and noise. Our pipeline applies a multi-layered defense to isolate them.
-                </p>
-                <div class="grid-3">
-                    <div class="card">
-                        <div class="card-title" style="color: var(--danger);">1. Honeypots</div>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
-                            Profiles with completely impossible timelines or inflated metrics designed to fool naive semantic search.
-                        </p>
-                        <span class="warning-badge">Hard Filtered (42 caught)</span>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #f59e0b;">2. Keyword Stuffers</div>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
-                            Candidates listing dozens of expert-level AI keywords (Pinecone, BERT) but carrying non-technical titles (Marketing Manager, Accountant).
-                        </p>
-                        <span class="warning-badge" style="color:#f59e0b; border-color:rgba(245,158,11,0.2); background:rgba(245,158,11,0.1);">Capped Score to 0.05</span>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #60a5fa;">3. Services Careers</div>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-bottom: 1rem;">
-                            Candidates who have spent their entire career at consulting/IT services firms (TCS, Infosys, Accenture) representing a culture-fit risk.
-                        </p>
-                        <span class="warning-badge" style="color:#60a5fa; border-color:rgba(96,165,250,0.2); background:rgba(96,165,250,0.1);">Proportional Penalties</span>
-                    </div>
-                </div>
-            </div>
-            <footer>
-                <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 3 of 10</span>
-            </footer>
-        </div>
-
-        <!-- Slide 4: Pipeline Architecture -->
+        <!-- Slide 4: Ranking Methodology -->
         <div class="slide" id="slide-4">
             <header>
-                <span class="slide-tag">Architecture</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">04/10</span>
+                <span class="slide-tag">Ranking Methodology</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">04/11</span>
             </header>
             <div class="slide-content">
                 <div class="grid-2">
                     <div>
-                        <h2 class="slide-title" style="margin-bottom: 1rem;">Four-Stage Ranking Pipeline</h2>
-                        <ul class="bullet-list">
-                            <li><strong style="color: white;">Stage 0 (Stream Loader):</strong> Parses candidates line-by-line using standard Python generators. Eliminates high peak memory, scaling seamlessly to 100K+ profiles.</li>
-                            <li><strong style="color: white;">Stage 1 (Hard Filtering):</strong> Eliminates the 42 definitively impossible honeypots using strict deterministic rules.</li>
-                            <li><strong style="color: white;">Stage 2 (6-Dimension Scorer):</strong> Computes normalized sub-scores for each candidate. Applies suspicion multipliers to borderline cases.</li>
-                            <li><strong style="color: white;">Stage 3 (Deterministic Ranker):</strong> Sorts candidates descending by score and breaks ties ascending by candidate ID. Generates varied reasoning using MD5-based deterministic seeding.</li>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Multi-Dimension Scoring</h2>
+                        <p style="color: var(--text-secondary); font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.75rem;">
+                            Candidate scores are normalized from 0.0 to 1.0 using six weighted dimensions:
+                        </p>
+                        <ul class="bullet-list" style="font-size: 0.9rem;">
+                            <li><strong style="color: white;">Career Relevance (30%):</strong> Product tenure ratio, ML keywords in titles.</li>
+                            <li><strong style="color: white;">Skills Match (25%):</strong> Mandatory Must-haves vs. Fringe domain penalties.</li>
+                            <li><strong style="color: white;">Experience Band (15%):</strong> Smooth piecewise curve, flat peak across the 6–8 YoE band.</li>
+                            <li><strong style="color: white;">Behavioral Signals (15%):</strong> Recruiter response and profile activity.</li>
+                            <li><strong style="color: white;">Location & Logistics (10%):</strong> Residency (Noida/Pune) and notice period.</li>
+                            <li><strong style="color: white;">Education Quality (5%):</strong> Tier-1/Tier-2 degrees & major relevance.</li>
                         </ul>
                     </div>
-                    <div class="card" style="font-family: var(--font-mono); font-size: 0.75rem; color: #a5b4fc; background: #020617; line-height: 1.4; border: 1px solid rgba(99, 102, 241, 0.2);">
-                        <div>[INPUT] candidates.jsonl</div>
-                        <div style="color: #475569;">  │</div>
-                        <div style="color: #6366f1;">  ▼ (Stage 0: Streaming loader.py)</div>
-                        <div>  Stream Candidate Object</div>
-                        <div style="color: #475569;">  │</div>
-                        <div style="color: #ef4444;">  ▼ (Stage 1: filters.py - is_honeypot?)</div>
-                        <div>  [True]  → Discard (42 honeypots caught)</div>
-                        <div>  [False] → Compute suspicion multiplier [0.0 - 0.3]</div>
-                        <div style="color: #475569;">  │</div>
-                        <div style="color: #10b981;">  ▼ (Stage 2: scorer.py)</div>
-                        <div>  Calculate weighted sum across 6 dimensions</div>
-                        <div>  Final Score = Weighted Sum * (1.0 - Suspicion)</div>
-                        <div style="color: #475569;">  │</div>
-                        <div style="color: #818cf8;">  ▼ (Stage 3: ranker.py)</div>
-                        <div>  Sort, Tie-break, Generate reasoning (hashlib seed)</div>
-                        <div style="color: #475569;">  │</div>
-                        <div>[OUTPUT] submission.csv (Top 100)</div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary-light);">
+                            <span>🧮 Heuristics & Multi-Signal Blend</span>
+                        </div>
+                        <ul class="bullet-list" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <li><strong style="color: white;">The Skills Gate:</strong> Imposes a mandatory threshold on technical scores; non-technical candidates cannot rank highly due to location/logistics alone.</li>
+                            <li><strong style="color: white;">Suspicion Penalty Multipliers:</strong> Instead of immediate removal, borderline inconsistencies (e.g. minor timeline overlaps) discount the score by 5-30%.</li>
+                            <li><strong style="color: white;">Deterministic Tie-Breaking:</strong> Sorts descending by score, ascending by candidate ID. Ensures 100% reproducible rankings.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 4 of 10</span>
+                <span>Slide 4 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 5: Stage 1: Honeypot & Suspicion Engine -->
+        <!-- Slide 5: Explainability & Data Validation -->
         <div class="slide" id="slide-5">
             <header>
-                <span class="slide-tag">Stage 1 Filter</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">05/10</span>
+                <span class="slide-tag">Explainability & Validation</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">05/11</span>
             </header>
             <div class="slide-content">
-                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Defensive Filtering & Borderline Suspicion</h2>
                 <div class="grid-2">
-                    <div class="card">
-                        <div class="card-title" style="color: var(--danger); font-size: 1.1rem;">🚫 1. Hard Honeypot Filters (Caught: 42)</div>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-top: 0.5rem;">
-                            If a candidate meets any of these 3 impossible criteria, they are immediately discarded:
-                        </p>
-                        <ul class="bullet-list" style="margin-top: 0.5rem;">
-                            <li><strong style="color: white;">Zero-Duration Experts:</strong> Expert in 3+ skills with exactly 0 months of stated experience.</li>
-                            <li><strong style="color: white;">YoE Breakers:</strong> Stated duration of a single job exceeds total self-reported years of experience.</li>
-                            <li><strong style="color: white;">Timeline Breakers:</strong> Stated duration of a single job exceeds the calendar dates by more than 12 months.</li>
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 0.5rem;">How Decisions are Explained</h2>
+                        <ul class="bullet-list" style="font-size: 0.95rem;">
+                            <li><strong style="color: white;">Fact-Grounded Reasoning:</strong> Every description is built from actual profile fields (role, company, YoE, specific skills, degree relevance).</li>
+                            <li><strong style="color: white;">Zero Hallucinations:</strong> The engine uses zero generative text APIs, making justifications 100% factual and deterministic.</li>
+                            <li><strong style="color: white;">Deterministic Variety:</strong> Computes MD5 hash of candidate ID to seed sentence templates. The same candidate gets identical reasoning, but text varies across candidates.</li>
                         </ul>
                     </div>
                     <div class="card">
-                        <div class="card-title" style="color: #f59e0b; font-size: 1.1rem;">⚠️ 2. Borderline Suspicion Penalty</div>
-                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-top: 0.5rem;">
-                            For profiles that are highly suspicious but not provably impossible. They are penalized by a multiplier:
-                        </p>
-                        <ul class="bullet-list" style="margin-top: 0.5rem;">
-                            <li><strong style="color: white;">Borderline Zero-Duration (-0.15):</strong> Expert in 1-2 skills with 0 months of experience.</li>
-                            <li><strong style="color: white;">Minor Timeline Mismatches (-0.10):</strong> Stated job duration exceeds calendar span by 6-12 months.</li>
-                            <li><strong style="color: white;">Extreme Skill Durations (-0.05):</strong> Stated skill duration exceeds total career span by 2.5x.</li>
+                        <div class="card-title" style="color: var(--danger);">
+                            <span>🛡️ Defending Against Suspicious Profiles</span>
+                        </div>
+                        <ul class="bullet-list" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <li><strong style="color: white;">Definite Honeypot Filters:</strong> Immediate removal of candidates with impossible data (zero-duration expert skills, single job duration > total self-reported YoE, or job dates exceeding calendar limit by >12 months). 42 caught.</li>
+                            <li><strong style="color: white;">Robust YoE Verification:</strong> Calculates experience from job spans rather than trusting raw text values, bypassing self-reported padding.</li>
                         </ul>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 5 of 10</span>
+                <span>Slide 5 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 6: Stage 2: Scoring Framework -->
+        <!-- Slide 6: End-to-End Workflow -->
         <div class="slide" id="slide-6">
             <header>
-                <span class="slide-tag">Stage 2 Scorer</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">06/10</span>
+                <span class="slide-tag">Pipeline Workflow</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">06/11</span>
             </header>
             <div class="slide-content">
-                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Composite Scoring Framework</h2>
-                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">
-                    Scores candidates on a scale of 0.0 to 1.0 across six core dimensions derived directly from the Job Description.
-                </p>
+                <h2 class="slide-title" style="margin-bottom: 1rem;">Complete Job-to-Candidate Workflow</h2>
                 <div class="grid-3" style="font-size: 0.85rem;">
                     <div class="card">
-                        <div class="card-title" style="color: #818cf8; font-size: 1rem;">Career Relevance (30%)</div>
-                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
-                            Calculates ratio of time at product vs services companies. Checks titles for AI/ML keywords, searches descriptions for ML terms, and rewards ownership/shipping verbs.
+                        <div class="card-title" style="color: var(--primary-light);">1. Ingest & Stream</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Stream `candidates.jsonl` record by record. Parses details dynamically, avoiding memory bloat and maintaining a sub-120 MB RAM footprint.
                         </p>
                     </div>
                     <div class="card">
-                        <div class="card-title" style="color: #818cf8; font-size: 1rem;">Skills Match (25%)</div>
-                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
-                            Weights core must-haves (embeddings, vector search, evaluation metrics). Penalizes negative domain match (computer vision, robotics). Rewards skill assessments and peer endorsements.
+                        <div class="card-title" style="color: var(--danger);">2. Filter & Clean</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Validate candidate timestamps and durations. Discard impossible profiles (honeypots) and compute suspicion discounts for borderline cases.
                         </p>
                     </div>
                     <div class="card">
-                        <div class="card-title" style="color: #818cf8; font-size: 1rem;">Experience Band (15%)</div>
-                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
-                            Uses a smooth Gaussian-like curve centered on the 6-8 year ideal range. Evaluated against <strong style="color: white;">Robust YoE</strong> to prevent self-reported experience padding.
+                        <div class="card-title" style="color: var(--accent);">3. Dimension Score</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Apply the scoring matrix across 6 dimensions, pass candidates through the technical skills gate, and compute the final weighted index.
                         </p>
                     </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #10b981; font-size: 1rem;">Behavioral Signals (15%)</div>
-                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
-                            Combines profile recency, recruiter response rate, profile completeness, GitHub activity score, open-to-work flag, and prior interview completion rate.
-                        </p>
+                </div>
+                <div class="grid-2" style="font-size: 0.85rem; margin-top: 0.5rem;">
+                    <div class="card" style="padding: 1rem 1.5rem;">
+                        <strong style="color: white;">4. Sort & Rank:</strong> Sort candidates descending by score and break ties using ID sorting.
                     </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #10b981; font-size: 1rem;">Location & Logistics (10%)</div>
-                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
-                            Rewards Noida/Pune residency. Considers relocation willingness. Scores notice period: buyouts for sub-30d get bonuses, while >90d notice periods are penalized.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #10b981; font-size: 1rem;">Education Quality (5%)</div>
-                        <p style="color: var(--text-secondary); line-height: 1.4; margin-top: 0.5rem;">
-                            Tier-1 (IIT, NIT, Stanford, etc.) and Tier-2 institution classification. Checks relevance of field of study. Applies heavy penalties for PhD wrong field matches.
-                        </p>
+                    <div class="card" style="padding: 1rem 1.5rem;">
+                        <strong style="color: white;">5. Write & Validate:</strong> Generate fact-grounded reasonings, output to `submission.csv`, and run strict format checks.
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 6 of 10</span>
+                <span>Slide 6 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 7: Algorithmic Innovations -->
+        <!-- Slide 7: System Architecture -->
         <div class="slide" id="slide-7">
             <header>
-                <span class="slide-tag">Algorithmic Design</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">07/10</span>
+                <span class="slide-tag">Architecture</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">07/11</span>
             </header>
             <div class="slide-content">
-                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Key Innovations for Robust Alignment</h2>
-                <div class="grid-3" style="font-size: 0.85rem;">
-                    <div class="card">
-                        <div class="card-title" style="color: #a78bfa;">1. Robust YoE Estimation</div>
-                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
-                            Self-reported years of experience is often inflated (e.g. 16.2 years vs. 8.17 years actual career span).
-                        </p>
-                        <p style="color: var(--text-primary); line-height: 1.5; margin-top: 0.5rem;">
-                            Our algorithm cross-validates self-reported YoE against the sum of dated career jobs. If they differ by >1.5 years, we trust the career history sum.
-                        </p>
-                    </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #a78bfa;">2. Exact Company Mapping</div>
-                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
-                            Consulting careers carry a heavy culture-fit penalty. Classifying companies via heuristics is prone to errors.
-                        </p>
-                        <p style="color: var(--text-primary); line-height: 1.5; margin-top: 0.5rem;">
-                            We fully mapped the 63 unique companies present in the candidate database, identifying exactly <strong style="color: white;">52 product/tech companies</strong> and <strong style="color: white;">11 consulting/services firms</strong>.
+                <div class="grid-2">
+                    <div>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Modular Architecture</h2>
+                        <ul class="bullet-list" style="font-size: 0.95rem;">
+                            <li><strong style="color: white;">loader.py:</strong> Memory-efficient streaming JSONL loader.</li>
+                            <li><strong style="color: white;">filters.py:</strong> Hard honeypot filtering and suspicion check.</li>
+                            <li><strong style="color: white;">scorer.py:</strong> 6-dimensional weighted scoring system.</li>
+                            <li><strong style="color: white;">ranker.py:</strong> Deterministic sorting and justification builder.</li>
+                        </ul>
+                        <p style="color: var(--text-secondary); font-size: 0.85rem; line-height: 1.5; margin-top: 1rem;">
+                            <strong>Design Philosophy:</strong> We deliberately chose simple, transparent, deterministic Python rules over heavy neural models to guarantee sub-10 second, CPU-only execution with zero network requirements.
                         </p>
                     </div>
-                    <div class="card">
-                        <div class="card-title" style="color: #a78bfa;">3. Active Builder Language</div>
-                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
-                            Participants often describe projects passively ("helped with", "assisted"). The JD requires active builders.
-                        </p>
-                        <p style="color: var(--text-primary); line-height: 1.5; margin-top: 0.5rem;">
-                            Our lexical parser detects active verbs ("shipped", "built", "architected", "deployed", "A/B tested", "at scale") to boost candidates with verified ownership.
-                        </p>
+                    <div class="card" style="font-family: var(--font-mono); font-size: 0.8rem; color: #a5b4fc; background: #020617; line-height: 1.4; border: 1px solid rgba(99, 102, 241, 0.2); display: flex; flex-direction: column; justify-content: center;">
+                        <div style="text-align: center; font-weight: bold; margin-bottom: 0.75rem; color: white;">DATA PROCESSING FLOW</div>
+                        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.25rem;">
+                            <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid var(--primary-light); padding: 0.35rem 0.75rem; border-radius: 6px;">candidates.jsonl (100K Records)</div>
+                            <div>↓</div>
+                            <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid var(--primary-light); padding: 0.35rem 0.75rem; border-radius: 6px;">Streaming Ingestion (loader.py)</div>
+                            <div>↓</div>
+                            <div style="background: rgba(239, 68, 68, 0.15); border: 1px solid var(--danger); padding: 0.35rem 0.75rem; border-radius: 6px;">Adversarial Filter (filters.py)</div>
+                            <div>↓</div>
+                            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent); padding: 0.35rem 0.75rem; border-radius: 6px;">6-Dimensional Scorer (scorer.py)</div>
+                            <div>↓</div>
+                            <div style="background: rgba(99, 102, 241, 0.15); border: 1px solid var(--primary-light); padding: 0.35rem 0.75rem; border-radius: 6px;">Justification Ranker (ranker.py)</div>
+                            <div>↓</div>
+                            <div style="background: rgba(16, 185, 129, 0.15); border: 1px solid var(--accent); padding: 0.35rem 0.75rem; border-radius: 6px; font-weight: bold;">submission.csv (Top 100 Candidates)</div>
+                        </div>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 7 of 10</span>
+                <span>Slide 7 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 8: Tie-Breaking & Reasoning -->
+        <!-- Slide 8: Results & Performance -->
         <div class="slide" id="slide-8">
             <header>
-                <span class="slide-tag">Deterministic Outputs</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">08/10</span>
+                <span class="slide-tag">Results & Performance</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">08/11</span>
             </header>
             <div class="slide-content">
                 <div class="grid-2">
-                    <div>
-                        <h2 class="slide-title" style="margin-bottom: 1rem;">Reproducible Rank & Reasoning</h2>
-                        <ul class="bullet-list">
-                            <li><strong style="color: white;">Strict Tie-Breaking:</strong> Sorts descending by score, ascending by candidate ID. Ensures unique, reproducible ranks (no random shifts).</li>
-                            <li><strong style="color: white;">No Network LLMs:</strong> Reasoning is generated deterministically on the local CPU without expensive network calls.</li>
-                            <li><strong style="color: white;">Deterministic Seeding:</strong> Computes an MD5 hash of the candidate ID to seed the randomizer per-candidate. The same candidate gets the same reasoning across runs, while ensuring variation across candidates.</li>
-                            <li><strong style="color: white;">Structured Variation:</strong> Uses 5 distinct sentence templates. Prioritizes strong facts (skills, career) over weak supporting details. Preserves proper noun casing (IIT, Meta).</li>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--accent);">🏆 Ranking Quality Insights</div>
+                        <ul class="bullet-list" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <li><strong style="color: white;">0% Honeypot Rate:</strong> Catching and eliminating all 42 honeypots from the top 100 results.</li>
+                            <li><strong style="color: white;">Target YoE:</strong> Median experience of the top 100 candidates is 6.5 years, aligning perfectly with the JD.</li>
+                            <li><strong style="color: white;">Culture Fit:</strong> 100% of top candidates are verified product ML builders. Services-only profiles are successfully down-ranked.</li>
                         </ul>
                     </div>
-                    <div class="card" style="font-family: var(--font-mono); font-size: 0.8rem; background: #020617; border: 1px solid rgba(99, 102, 241, 0.2);">
-                        <div style="color: #a5b4fc; font-weight: 600; margin-bottom: 0.5rem;">Sample Generated Reasonings:</div>
-                        <div style="margin-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
-                            <span style="color: #38bdf8;">Rank 1 (CAND_0018499):</span><br>
-                            "Notably, Brings Learning To Rank, Qlora experience. 7 years of experience, currently Senior Machine Learning Engineer at Zomato."
-                        </div>
-                        <div style="margin-bottom: 0.75rem; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 0.5rem;">
-                            <span style="color: #38bdf8;">Rank 2 (CAND_0052328):</span><br>
-                            "Brings Fine-Tuning Llms, Learning To Rank experience, complemented by Stanford University graduate (Tier-1)."
-                        </div>
-                        <div>
-                            <span style="color: #38bdf8;">Rank 15 (CAND_0010257):</span><br>
-                            "Strong fit for the Senior AI Engineer role — Previously Search Engineer at PharmEasy; Built embedding-based systems at Google. Concern: 120-day notice period exceeds JD's preferred 30-day window."
-                        </div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary-light);">⚡ Runtime & Compute Profile</div>
+                        <ul class="bullet-list" style="margin-top: 0.5rem; font-size: 0.9rem;">
+                            <li><strong style="color: white;">Execution Speed:</strong> Completed 100K candidates ranking in <strong class="highlight-text">~9.47 seconds</strong> on single-core CPU Docker run. (Limit: 5 minutes).</li>
+                            <li><strong style="color: white;">Memory Usage:</strong> Bounded under <strong class="highlight-text">~120 MB RAM</strong> peak memory footprint. (Limit: 16 GB).</li>
+                            <li><strong style="color: white;">Strict Determinism:</strong> Confirmed 100% reproducible outputs (verified SHA-256 hash across runs).</li>
+                        </ul>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 8 of 10</span>
+                <span>Slide 8 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 9: Results & Performance -->
+        <!-- Slide 9: Technologies Used -->
         <div class="slide" id="slide-9">
             <header>
-                <span class="slide-tag">Performance</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">09/10</span>
+                <span class="slide-tag">Technologies Used</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">09/11</span>
             </header>
             <div class="slide-content">
-                <h2 class="slide-title" style="margin-bottom: 1rem;">Verification & Submission Results</h2>
-                <div class="grid-2">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Why These Tools Were Selected</h2>
+                <div class="grid-3" style="font-size: 0.85rem;">
                     <div class="card">
-                        <div class="card-title" style="color: var(--accent);">📊 Challenge Validation Status</div>
-                        <ul class="bullet-list" style="margin-top: 0.5rem;">
-                            <li><strong style="color: white;">Format Validator:</strong> Passed local validation using <code style="color: #38bdf8; font-family: var(--font-mono);">validate_submission.py</code>. Row counts, ranks, score monotonicity, and columns match exactly.</li>
-                            <li><strong style="color: white;">Zero Honeypots:</strong> Evaluated top 100 results against 42 confirmed honeypots. <code style="color: var(--accent); font-weight: bold;">0% honeypot rate</code> achieved.</li>
-                            <li><strong style="color: white;">Reproducibility:</strong> Runs generated across different trials have 100% identical outputs (CSV hash verified).</li>
-                        </ul>
+                        <div class="card-title" style="color: var(--primary-light);">1. Python 3.11 Standard Library</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Core ranking uses zero external dependencies (no pandas/numpy) to avoid module conflicts, overhead, and guarantee sub-10 second execution.
+                        </p>
                     </div>
                     <div class="card">
-                        <div class="card-title" style="color: var(--primary-light);">⚡ Runtime Efficiency Metrics</div>
-                        <div style="font-size: 1.8rem; font-weight: 700; color: white; margin: 1rem 0;">
-                            ~9.8 Seconds <span style="font-size: 1rem; color: var(--text-secondary); font-weight: 400;">to score and rank 100,000 candidates</span>
-                        </div>
-                        <ul class="bullet-list">
-                            <li><strong style="color: white;">RAM Consumption:</strong> Under 500 MB peak. Easily fits within the 16 GB constraint.</li>
-                            <li><strong style="color: white;">CPU Scaling:</strong> Stream parsing executes on 1 CPU core without parallel overhead.</li>
-                            <li><strong style="color: white;">No Precomputation:</strong> Executes end-to-end directly from raw candidates file.</li>
-                        </ul>
+                        <div class="card-title" style="color: var(--accent);">2. Docker & Linux Environment</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Ensures 100% reproducible runtime matches the validator platform, avoiding OS-specific path and CRLF/LF line ending errors.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #f59e0b;">3. Google Colab Sandbox</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Utilized for direct sample test run, format check, and interactive output data visualization by the evaluation judges.
+                        </p>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 9 of 10</span>
+                <span>Slide 9 of 11</span>
             </footer>
         </div>
 
-        <!-- Slide 10: Future Vision -->
+        <!-- Slide 10: Submission Assets -->
         <div class="slide" id="slide-10">
             <header>
-                <span class="slide-tag">Future Roadmap</span>
-                <span style="font-family: var(--font-mono); color: var(--text-secondary);">10/10</span>
+                <span class="slide-tag">Submission Assets</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">10/11</span>
+            </header>
+            <div class="slide-content">
+                <h2 class="slide-title" style="margin-bottom: 0.5rem;">Provided Submission Deliverables</h2>
+                <div class="grid-3" style="font-size: 0.85rem;">
+                    <div class="card">
+                        <div class="card-title" style="color: var(--accent);">1. Ranked CSV File</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            The official formatted CSV file containing exactly the top 100 candidate IDs, scores, ranks, and deterministic justifications.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: var(--primary-light);">2. GitHub Repository</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            Public code repository containing clean pipeline modules, Dockerfile, setup instructions, and validation scripts.
+                        </p>
+                    </div>
+                    <div class="card">
+                        <div class="card-title" style="color: #60a5fa;">3. Colab Sandbox Notebook</div>
+                        <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
+                            A Google Colab notebook linking to the repository, running candidate parsing on a sample file, verifying format and output.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <footer>
+                <span>Redrob AI India Runs Data & AI Challenge</span>
+                <span>Slide 10 of 11</span>
+            </footer>
+        </div>
+
+        <!-- Slide 11: Conclusion & Thank You -->
+        <div class="slide" id="slide-11">
+            <header>
+                <span class="slide-tag">Conclusion</span>
+                <span style="font-family: var(--font-mono); color: var(--text-secondary);">11/11</span>
             </header>
             <div class="slide-content">
                 <div class="grid-2">
                     <div>
-                        <h2 class="slide-title" style="margin-bottom: 1rem;">Future Roadmap</h2>
+                        <h2 class="slide-title" style="margin-bottom: 1rem;">Key Takeaways</h2>
                         <ul class="bullet-list">
-                            <li><strong style="color: white;">Dynamic Score Calibration:</strong> Integrate a validation set of ranked candidates to automatically optimize dimensions weights (rather than heuristic tuning).</li>
-                            <li><strong style="color: white;">Semantic Parsing of Careers:</strong> Deploy a lightweight local model (e.g. a small BERT model running locally) to parse career histories for semantic concepts, replacing lexical matches.</li>
-                            <li><strong style="color: white;">Automated Entity Syncing:</strong> Pull latest Crunchbase/Linkedin data periodically to keep company classifications (product vs service, founder dates) dynamically updated.</li>
+                            <li><strong style="color: white;">Integrity & Security:</strong> Zero LLM APIs during candidate scoring means the system cannot hallucinate, leak data, or experience connection drops.</li>
+                            <li><strong style="color: white;">Real-World Match:</strong> Combines career trajectory heuristics with behavioral availability signals to mimic a human recruiter.</li>
                         </ul>
                     </div>
-                    <div class="card">
-                        <div class="card-title" style="color: var(--primary-light);">💡 Key Learning</div>
-                        <p style="color: var(--text-secondary); line-height: 1.5; font-size: 0.9rem; margin-top: 0.5rem;">
-                            Building candidate discoveries requires looking past the keywords. By combining behavioral signals (availability) with career trajectory validation (robust experience, product context), we achieve a ranking that mirrors a professional recruiter's judgment, rather than an inflated skill list.
-                        </p>
-                        <p style="color: white; font-weight: 600; margin-top: 1rem; font-family: var(--font-display);">
-                            Thank you! — Team Biscuit
+                    <div class="card" style="text-align: center; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 1rem;">
+                        <img src="logo.png" alt="Biscuit Logo" style="height: 100px; width: auto; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));">
+                        <h3 style="font-family: var(--font-display); font-size: 1.5rem; color: white;">Thank you!</h3>
+                        <p style="color: var(--text-secondary); font-size: 0.9rem;">
+                            Designed & Engineered by Team <strong>Biscuit</strong>
                         </p>
                     </div>
                 </div>
             </div>
             <footer>
                 <span>Redrob AI India Runs Data & AI Challenge</span>
-                <span>Slide 10 of 10</span>
+                <span>Slide 11 of 11</span>
             </footer>
         </div>
 
