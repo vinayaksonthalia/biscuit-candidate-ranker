@@ -559,7 +559,7 @@
                     <div class="card">
                         <div class="card-title" style="color: var(--primary-light);">1. Ingest & Stream</div>
                         <p style="color: var(--text-secondary); line-height: 1.5; margin-top: 0.5rem;">
-                            Stream `candidates.jsonl` record by record. Parses details dynamically, avoiding memory bloat and maintaining a sub-120 MB RAM footprint.
+                            Stream `candidates.jsonl` record by record. Parses details dynamically, scoring the full 100K pool within a ~2 GB peak footprint — comfortably under the 16 GB limit.
                         </p>
                     </div>
                     <div class="card">
@@ -654,7 +654,7 @@
                         <div class="card-title" style="color: var(--primary-light);">⚡ Runtime & Compute Profile</div>
                         <ul class="bullet-list" style="margin-top: 0.5rem; font-size: 0.9rem;">
                             <li><strong style="color: white;">Execution Speed:</strong> Completed 100K candidates ranking in <strong class="highlight-text">~9.47 seconds</strong> on single-core CPU Docker run. (Limit: 5 minutes).</li>
-                            <li><strong style="color: white;">Memory Usage:</strong> Bounded under <strong class="highlight-text">~120 MB RAM</strong> peak memory footprint. (Limit: 16 GB).</li>
+                            <li><strong style="color: white;">Memory Usage:</strong> Bounded under <strong class="highlight-text">~2 GB RAM</strong> peak memory footprint. (Limit: 16 GB).</li>
                             <li><strong style="color: white;">Strict Determinism:</strong> Confirmed 100% reproducible outputs (verified SHA-256 hash across runs).</li>
                         </ul>
                     </div>
