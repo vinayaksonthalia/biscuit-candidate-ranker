@@ -89,6 +89,8 @@ python validate_submission.py submission.csv
 
 > **Python alias note:** if your machine only exposes Python 3 as `python3`, use that. The Docker image and Colab sandbox use `python`.
 
+> **Submitted file:** the reproduce command outputs `submission.csv`. The file uploaded to the portal is **`Biscuit.csv`** — a **byte-identical** copy renamed to our team ID (per the spec's `<participant_id>.csv` filename rule). Both are committed so the exact submitted artifact is traceable in the repo; verify with `diff submission.csv Biscuit.csv` (no differences).
+
 ---
 
 ## ✅ Compute Compliance (Stage 3)

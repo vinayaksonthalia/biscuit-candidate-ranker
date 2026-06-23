@@ -27,6 +27,7 @@ env/
 *.csv
 !sample_submission.csv
 !submission.csv
+!Biscuit.csv
 
 # Challenge bundle — organizer dataset + IP, never commit (487MB candidates.jsonl)
 # Brackets escaped: [PUB] would otherwise be read as a glob character class.
