@@ -1,6 +1,6 @@
 # 🍪 Biscuit — Intelligent Candidate Ranking System
 
-> A deterministic, **CPU-only, zero-dependency** candidate ranking engine for the **Redrob AI "India Runs" Data & AI Challenge**. Ranks the top 100 candidates from a 100,000-profile pool against a Senior AI Engineer job description — in **~10 seconds**, with fact-grounded reasoning for every pick.
+> A deterministic, **CPU-only, zero-dependency** candidate ranking engine for the **Redrob AI "India Runs" Data & AI Challenge**. Ranks the top 100 candidates from a 100,000-profile pool against a Senior AI Engineer job description — in **well under a minute** (≈10 s in isolated Docker), with fact-grounded reasoning for every pick.
 
 **Reproduce command:** `python rank.py --candidates ./candidates.jsonl --out ./submission.csv`
 
@@ -10,7 +10,7 @@
 
 | | |
 |---|---|
-| ⚡ **Fast** | Full 100K pool ranked in **~9–12 s** (limit: 5 min) |
+| ⚡ **Fast** | Full 100K pool ranked in **under 30 s** (~10 s in isolated Docker; limit: 5 min) |
 | 🧠 **Zero dependencies** | Pure Python **standard library** — no pandas, no numpy, no LLM calls |
 | 🔁 **Deterministic** | Byte-identical output across runs (MD5-seeded, not `hash()`) |
 | 🛡️ **Honeypot-safe** | **0** honeypots, **0** pure-consulting, **0** ghost profiles in the top 100 |
@@ -64,7 +64,8 @@ biscuit-candidate-ranker/
 ├── sandbox/
 │   └── sandbox_notebook.ipynb   # Colab end-to-end demo on a sample
 ├── docs/
-│   └── blueprint.html       # Presentation deck (approach + architecture)
+│   ├── submission_deck.html        # Presentation deck source (→ PDF below)
+│   └── Biscuit_Submission_Deck.pdf  # Rendered 9-page deck
 └── data/
     └── sample_candidates.json   # 50-candidate sample for quick runs
 ```
@@ -99,7 +100,7 @@ The ranking step is reproducible inside a sealed Docker container matching the c
 
 | Constraint | Limit | Biscuit | ✓ |
 |---|---|---|---|
-| Runtime (full 100K) | ≤ 5 min | **~9–12 s** | ✅ |
+| Runtime (full 100K) | ≤ 5 min | **< 30 s** (~10 s in Docker) | ✅ |
 | Memory (peak RSS) | ≤ 16 GB | **~2 GB** | ✅ |
 | Compute | CPU only | CPU only | ✅ |
 | Network | off | **zero** network calls | ✅ |
@@ -219,9 +220,9 @@ A Google Colab notebook runs the full pipeline end-to-end on the 50-candidate sa
 
 The presentation explaining our approach, architecture, and design decisions:
 
-- **[docs/blueprint.html](docs/blueprint.html)** — interactive HTML slideshow.
+- **[docs/Biscuit_Submission_Deck.pdf](docs/Biscuit_Submission_Deck.pdf)** — the rendered 9-page deck (source: `docs/submission_deck.html`).
 
-**Export to PDF:** open `docs/blueprint.html` in Chrome/Safari/Edge → `Cmd/Ctrl + P` → *Save as PDF*, **Landscape**, with **Background graphics** enabled.
+To regenerate the PDF: open `docs/submission_deck.html` in Chrome → `Cmd/Ctrl + P` → *Save as PDF*, **Landscape**, **Background graphics** on. (`docs/blueprint.html` is an earlier interactive version.)
 
 ---
 

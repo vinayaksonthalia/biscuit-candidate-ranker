@@ -1,7 +1,9 @@
 """
 Loader — memory-efficient candidate loading from JSONL and JSON files.
 
-Streams JSONL line-by-line to keep RAM usage minimal (~100MB for 100K candidates).
+Streams JSONL line-by-line, so the loader itself holds only one record at a time.
+(Peak process RAM, ~2 GB on the 100K pool, comes from the downstream scored list
+in rank.py, not from this loader.)
 Also handles JSON array format for sample_candidates.json.
 """
 

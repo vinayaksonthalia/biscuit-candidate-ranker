@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Biscuit — Submission Deck</title>
+<style>
+  :root{
+    --ink:#0f172a; --ink2:#334155; --muted:#64748b; --line:#e2e8f0;
+    --bg:#ffffff; --card:#f8fafc; --accent:#4f46e5; --accent2:#6366f1;
+    --green:#059669; --greenbg:#ecfdf5; --red:#dc2626; --redbg:#fef2f2;
+    --amber:#d97706; --blue:#0284c7;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:#525659;font-family:var(--font);color:var(--ink);}
+  @page{size:1280px 720px;margin:0;}
+  .slide{
+    position:relative;width:1280px;height:720px;background:var(--bg);
+    padding:48px 64px 56px;display:flex;flex-direction:column;overflow:hidden;
+    page-break-after:always;
+  }
+  .slide:last-child{page-break-after:auto;}
+  @media screen{.slide{margin:24px auto;box-shadow:0 10px 40px rgba(0,0,0,.4);}}
+
+  /* header / footer */
+  .hd{display:flex;justify-content:space-between;align-items:center;
+      border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:26px;}
+  .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:.06em;}
+  .brand{gap:0;}
+  .brand .brandlogo{height:52px;width:auto;display:block;}
+  .brand span{color:var(--accent);}
+  .hd .ev{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
+  .ft{position:absolute;left:64px;right:64px;bottom:22px;display:flex;justify-content:space-between;
+     align-items:center;font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px;}
+  .pg{font-family:var(--mono);font-weight:700;color:var(--accent);}
+
+  .kicker{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin-bottom:6px;}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-bottom:4px;}
+  .sub{font-size:15px;color:var(--ink2);line-height:1.5;}
+  .body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;}
+  .card h3{font-size:15px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:8px;color:var(--ink);}
+  .card h3 .ic{width:9px;height:9px;border-radius:50%;background:var(--accent);}
+  ul{list-style:none;}
+  li{position:relative;padding-left:20px;margin-bottom:9px;font-size:13.5px;color:var(--ink2);line-height:1.45;}
+  li::before{content:"";position:absolute;left:2px;top:7px;width:7px;height:7px;border-radius:2px;background:var(--accent2);}
+  li b{color:var(--ink);font-weight:700;}
+
+  table{width:100%;border-collapse:collapse;font-size:13.5px;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);}
+  th{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:700;}
+  td b{color:var(--ink);} .w{text-align:right;font-family:var(--mono);font-weight:700;color:var(--accent);}
+  .ok{color:var(--green);font-weight:800;font-family:var(--mono);}
+
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;
+        font-size:12px;font-weight:700;font-family:var(--mono);}
+  .chip.g{background:var(--greenbg);color:var(--green);}
+  .chip.r{background:var(--redbg);color:var(--red);}
+  .chip.b{background:#eff6ff;color:var(--blue);}
+
+  /* flow boxes */
+  .flow{display:flex;align-items:center;justify-content:center;gap:0;flex-wrap:nowrap;}
+  .node{background:#fff;border:1.5px solid var(--accent);border-radius:11px;padding:11px 14px;text-align:center;min-width:120px;}
+  .node .t{font-weight:700;font-size:13px;color:var(--ink);}
+  .node .d{font-size:11px;color:var(--muted);margin-top:2px;}
+  .node.red{border-color:var(--red);} .node.green{border-color:var(--green);background:var(--greenbg);}
+  .arrow{color:var(--accent2);font-size:22px;font-weight:800;padding:0 10px;}
+  .arrowd{color:var(--accent2);font-size:20px;font-weight:800;text-align:center;line-height:1;margin:4px 0;}
+
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;}
+  .stat .n{font-size:30px;font-weight:800;color:var(--accent);font-family:var(--mono);letter-spacing:-.02em;}
+  .stat .l{font-size:12px;color:var(--muted);margin-top:4px;font-weight:600;}
+
+  .quote{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:14px 18px;font-size:13px;line-height:1.5;font-family:var(--mono);}
+  .quote .r{color:#818cf8;font-weight:700;}
+  .note{font-size:12.5px;color:var(--muted);}
+  .lead{font-size:15px;color:var(--ink2);line-height:1.55;}
+  .lead b{color:var(--ink);}
+</style>
+</head>
+<body>
+
+<!-- ============ PAGE 2 — SOLUTION OVERVIEW ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Solution Overview</div>
+  <h1>A deterministic, explainable ranking engine</h1>
+  <p class="sub">Biscuit ranks the top 100 candidates from a 100,000-profile pool for a Senior AI Engineer role — CPU-only, zero-dependency, fully reproducible.</p>
+  <div class="body">
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ic"></span>What it does</h3>
+        <ul>
+          <li>Streams <b>100,000 profiles</b> and scores each on <b>six JD-derived dimensions</b>.</li>
+          <li>Hard-eliminates <b>impossible "honeypot" profiles</b>; down-weights borderline ones.</li>
+          <li>Emits a top-100 shortlist with a <b>unique, fact-grounded reason</b> per candidate.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ic"></span>What makes it different</h3>
+        <ul>
+          <li><b>Reasons about JD intent</b>, not keyword counts — catches keyword stuffers.</li>
+          <li><b>Penalizes services-only careers</b>; rewards product-company ML builders.</li>
+          <li><b>Down-weights "dead leads"</b> (inactive / unresponsive) per the JD.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="flow">
+      <div class="node"><div class="t">100K profiles</div><div class="d">candidates.jsonl</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node"><div class="t">Filter</div><div class="d">honeypots</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node"><div class="t">Score</div><div class="d">6 dimensions</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node"><div class="t">Rank + Reason</div><div class="d">top 100</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node green"><div class="t">Biscuit.csv</div><div class="d">submission</div></div>
+    </div>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">02</span></div>
+</section>
+
+<!-- ============ PAGE 3 — UNDERSTANDING THE JD ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Reading the Job Description</div>
+  <h1>What the role <em>says</em> vs. what it <em>means</em></h1>
+  <p class="sub">Senior AI Engineer (Founding Team) · Redrob AI · Pune/Noida, India · 5–9 yrs (ideal 6–8).</p>
+  <div class="body">
+    <div class="grid3">
+      <div class="card">
+        <h3><span class="ic"></span>Must have</h3>
+        <ul>
+          <li>Embeddings-based <b>retrieval</b></li>
+          <li><b>Vector DB / hybrid search</b></li>
+          <li>Strong <b>Python</b></li>
+          <li>Ranking eval — <b>NDCG / MRR / MAP</b></li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--redbg);border-color:#fecaca;">
+        <h3><span class="ic" style="background:var(--red);"></span>Explicitly not wanted</h3>
+        <ul>
+          <li><b>Services-only</b> careers (TCS, Infosys…)</li>
+          <li><b>CV / speech</b>-primary, no NLP/IR</li>
+          <li><b>Keyword stuffers</b> (non-tech titles)</li>
+          <li>Pure research · title-chasers</li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--greenbg);border-color:#a7f3d0;">
+        <h3><span class="ic" style="background:var(--green);"></span>Reading between the lines</h3>
+        <ul>
+          <li>A strong fit may use <b>no buzzwords</b> — but shipped a real recsys at a product company.</li>
+          <li>A perfect skill list with a <b>"Marketing Manager"</b> title is <b>not</b> a fit.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead">Biscuit encodes this directly: a <b>career-relevance</b> signal (product vs. services, shipped-system language), a <b>skills gate</b> that requires genuine ML/IR relevance, and <b>behavioral signals</b> that measure whether a candidate is actually reachable.</p>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">03</span></div>
+</section>
+
+<!-- ============ PAGE 4 — RANKING METHODOLOGY ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Ranking Methodology</div>
+  <h1>Six weighted dimensions, then two guardrails</h1>
+  <div class="body">
+    <div class="grid2">
+      <div>
+        <table>
+          <tr><th>Dimension</th><th>Weight</th><th>Measures</th></tr>
+          <tr><td><b>Career relevance</b></td><td class="w">30%</td><td>product vs. services, ML titles</td></tr>
+          <tr><td><b>Skills match</b></td><td class="w">25%</td><td>core IR/NLP, proficiency-weighted</td></tr>
+          <tr><td><b>Experience band</b></td><td class="w">15%</td><td>flat peak across 6–8 yrs</td></tr>
+          <tr><td><b>Behavioral</b></td><td class="w">15%</td><td>activity, response, availability</td></tr>
+          <tr><td><b>Location</b></td><td class="w">10%</td><td>India / notice / work mode</td></tr>
+          <tr><td><b>Education</b></td><td class="w">5%</td><td>institution tier, field</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3><span class="ic"></span>Two guardrails after the weighted sum</h3>
+        <div class="arrowd" style="margin-top:6px;">Σ weighted score</div>
+        <div class="arrowd">&darr;</div>
+        <div class="node" style="margin:0 auto;min-width:auto;"><div class="t">Suspicion multiplier</div>
+          <div class="d">× (1 − penalty) for borderline data</div></div>
+        <div class="arrowd">&darr;</div>
+        <div class="node" style="margin:0 auto;min-width:auto;"><div class="t">Skills gate</div>
+          <div class="d">&lt;0.05 &rarr; ×0.15&nbsp;·&nbsp;&lt;0.15 &rarr; ×0.35&nbsp;·&nbsp;&lt;0.25 &rarr; ×0.60</div></div>
+        <div class="arrowd">&darr;</div>
+        <div class="node green" style="margin:0 auto;min-width:auto;"><div class="t">final score</div></div>
+      </div>
+    </div>
+    <p class="lead"><b>The skills gate is the key idea:</b> relevance is a <b>precondition</b>, not just one term in a sum — so a non-technical profile with great location and engagement can never outrank a genuine ML engineer.</p>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">04</span></div>
+</section>
+
+<!-- ============ PAGE 5 — DATA INTEGRITY / HONEYPOTS ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Data Integrity</div>
+  <h1>Catching the "perfect-on-paper" traps</h1>
+  <p class="sub">The dataset embeds ~80 honeypots — subtly impossible profiles forced to relevance tier 0 in the hidden ground truth. Biscuit hard-eliminates the 42 that are <em>provably</em> impossible; the rest score low and never reach the top 100.</p>
+  <div class="body">
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ic" style="background:var(--red);"></span>Honeypot decision flow</h3>
+        <div style="margin-top:6px;">
+          <div class="node" style="margin:0 auto;min-width:auto;"><div class="t">≥3 "expert" skills with 0 months used?</div></div>
+          <div class="arrowd">&darr;&nbsp;&nbsp;no</div>
+          <div class="node" style="margin:0 auto;min-width:auto;"><div class="t">a single job longer than the person's total experience?</div></div>
+          <div class="arrowd">&darr;&nbsp;&nbsp;no</div>
+          <div class="node" style="margin:0 auto;min-width:auto;"><div class="t">stated duration &gt; calendar span by &gt;12 mo?</div></div>
+          <div class="arrowd">&darr;&nbsp;&nbsp;no</div>
+          <div class="node green" style="margin:0 auto;min-width:auto;"><div class="t">scored (minus any suspicion penalty)</div></div>
+          <p class="note" style="margin-top:10px;text-align:center;font-size:11px;">Rules 1 &amp; 2 catch all 42 on this dataset; rule 3 is an impossibility guard that does not trigger here.</p>
+        </div>
+      </div>
+      <div>
+        <div class="grid2" style="grid-template-columns:1fr 1fr;gap:14px;">
+          <div class="stat"><div class="n">42</div><div class="l">hard-eliminated</div></div>
+          <div class="stat"><div class="n">0</div><div class="l">honeypots in the top 100</div></div>
+        </div>
+        <div class="card" style="margin-top:14px;">
+          <h3><span class="ic"></span>Conservative by design</h3>
+          <ul>
+            <li>All 42 fire only on a <b>logical impossibility</b> (e.g. a single job longer than the person's total experience) — impossible by construction, not by label.</li>
+            <li>Softer inconsistencies become a graded <b>suspicion penalty</b>, not elimination.</li>
+            <li>No special-casing beyond impossibility — scoring naturally avoids the rest.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">05</span></div>
+</section>
+
+<!-- ============ PAGE 6 — EXPLAINABILITY ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Explainability</div>
+  <h1>A fact-grounded reason for every pick</h1>
+  <p class="sub">No LLM, no generative text — every justification is composed from real profile fields, so it is deterministic and free of invented skills or employers.</p>
+  <div class="body">
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ic"></span>How the reasoning is built</h3>
+        <ul>
+          <li><b>No fabricated entities:</b> years, titles, skills, and companies all come straight from the profile — there is no LLM in the loop.</li>
+          <li><b>Deterministic variation:</b> a per-candidate <span style="font-family:var(--mono)">MD5(candidate_id)</span> seed drives sentence templates — same candidate, same text every run; different candidates read differently.</li>
+          <li><b>Honest tone:</b> strong facts lead; gaps (long notice, junior, low engagement) are stated so tone matches rank.</li>
+        </ul>
+      </div>
+      <div>
+        <div class="quote">
+          <div class="r">rank 1 · score 0.989</div>
+          Notably, Brings Learning To Rank, Qlora experience. 7 years of experience, currently Senior Machine Learning Engineer at Zomato.
+        </div>
+        <div class="quote" style="margin-top:12px;">
+          <div class="r">rank 3 · score 0.9766</div>
+          Notably, Built retrieval-based systems at Vedantu. Previously Applied ML Engineer at Vedantu; Previously NLP Engineer at Haptik.
+        </div>
+        <p class="note" style="margin-top:12px;">Verbatim from <span style="font-family:var(--mono)">Biscuit.csv</span> — 100 unique reasoning strings, no templating repetition.</p>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">06</span></div>
+</section>
+
+<!-- ============ PAGE 7 — ARCHITECTURE ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">System Architecture</div>
+  <h1>A transparent, modular pipeline</h1>
+  <div class="body">
+    <div class="flow" style="margin-bottom:8px;">
+      <div class="node"><div class="t">loader.py</div><div class="d">stream JSONL</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node red"><div class="t">filters.py</div><div class="d">honeypot + suspicion</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node"><div class="t">scorer.py</div><div class="d">6-dim weighted</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node"><div class="t">ranker.py</div><div class="d">sort + reasoning</div></div>
+      <span class="arrow">&rarr;</span>
+      <div class="node green"><div class="t">Biscuit.csv</div><div class="d">top 100</div></div>
+    </div>
+    <p class="note" style="text-align:center;margin:4px 0 14px;">100,000 loaded &nbsp;&rarr;&nbsp; 42 honeypots removed &nbsp;&rarr;&nbsp; 99,958 scored &nbsp;&rarr;&nbsp; top 100 written · all parameters in <span style="font-family:var(--mono)">config.py</span></p>
+    <div class="grid3">
+      <div class="card"><h3><span class="ic"></span>loader.py</h3><p class="note">Memory-efficient streaming JSONL/JSON reader.</p></div>
+      <div class="card"><h3><span class="ic"></span>scorer.py</h3><p class="note">Six normalized dimensions + skills gate + suspicion multiplier.</p></div>
+      <div class="card"><h3><span class="ic"></span>ranker.py</h3><p class="note">Deterministic sort (↓score, ↑id) and reasoning builder.</p></div>
+    </div>
+    <p class="lead" style="margin-top:14px;"><b>Design philosophy:</b> simple, transparent, deterministic Python over heavy neural models — CPU-only, well within budget, network-free, with byte-identical output across runs.</p>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">07</span></div>
+</section>
+
+<!-- ============ PAGE 8 — VALIDATION ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Validation &amp; Methodology</div>
+  <h1>Validated by method, not by guessing</h1>
+  <p class="sub">With no public leaderboard and hidden labels, the ranking was validated by recomputable checks over the full pool — not by submitting variants.</p>
+  <div class="body">
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ic"></span>Top-100 health</h3>
+        <ul>
+          <li><b>0</b> honeypots · <b>0</b> services-only · <b>0</b> ghost profiles (&lt;10% response)</li>
+          <li>Median <b>6.45 years</b> experience — squarely in band</li>
+          <li>Median <b>5</b> core JD skills per candidate</li>
+          <li>Every top-10 shows concrete <b>shipped</b> retrieval / ranking / recsys work</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ic"></span>Whole-pool calibration</h3>
+        <ul>
+          <li><b>Whole-pool ordering:</b> top 100 are ML/IR engineers; by rank ~500 titles turn non-technical (Business Analyst, Project Manager); deeper still, unrelated roles (Mechanical Engineer, DevOps, Graphic Designer).</li>
+          <li><b>Honeypot audit:</b> all 42 hard-removals are logical impossibilities; <b>0</b> reach the top 100.</li>
+          <li><b>Variants tested:</b> a TF-IDF semantic hybrid and a skill-synonym expansion were prototyped; without the hidden labels neither could be shown to beat the transparent heuristic baseline, which was kept.</li>
+        </ul>
+      </div>
+    </div>
+    <p class="lead"><b>The discipline matters as much as the result:</b> a measured latency-quality trade-off, with variants rejected when they did not improve the top of the ranking.</p>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">08</span></div>
+</section>
+
+<!-- ============ PAGE 9 — RESULTS / PERFORMANCE ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Results &amp; Performance</div>
+  <h1>Fast, frugal, and fully reproducible</h1>
+  <div class="body">
+    <div class="grid3" style="margin-bottom:4px;">
+      <div class="stat"><div class="n">&lt;30s</div><div class="l">full 100K run · ~10s in Docker</div></div>
+      <div class="stat"><div class="n">~2 GB</div><div class="l">peak RAM (limit: 16 GB)</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">third-party dependencies</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ic"></span>Compute compliance (Stage 3)</h3>
+        <table>
+          <tr><th>Constraint</th><th>Limit</th><th>Biscuit</th></tr>
+          <tr><td>Runtime</td><td>≤ 5 min</td><td class="ok">&lt; 30 s</td></tr>
+          <tr><td>Memory</td><td>≤ 16 GB</td><td class="ok">~2 GB</td></tr>
+          <tr><td>Compute</td><td>CPU only</td><td class="ok">CPU ✓</td></tr>
+          <tr><td>Network</td><td>off</td><td class="ok">none ✓</td></tr>
+          <tr><td>Pre-compute</td><td>—</td><td class="ok">none ✓</td></tr>
+        </table>
+      </div>
+      <div class="card">
+        <h3><span class="ic"></span>Output quality &amp; reproducibility</h3>
+        <ul>
+          <li><b>Deterministic:</b> byte-identical CSV across runs (MD5-seeded, not salted <span style="font-family:var(--mono)">hash()</span>).</li>
+          <li><b>Spec-valid:</b> exactly 100 rows, passes the official format validator.</li>
+          <li><b>Score range</b> 0.8855 → 0.989 — the model differentiates, not flat.</li>
+          <li>No GPU, no LLM calls; ships with a Dockerfile for a sealed, network-free run.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">09</span></div>
+</section>
+
+<!-- ============ PAGE 10 — TECH & SUBMISSION ASSETS ============ -->
+<section class="slide">
+  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="kicker">Technology &amp; Deliverables</div>
+  <h1>Built to be reproduced and inspected</h1>
+  <div class="body">
+    <div class="grid2">
+      <div class="card">
+        <h3><span class="ic"></span>Technology choices</h3>
+        <ul>
+          <li><b>Python 3.11 standard library</b> — no pandas/numpy, removing dependency and version risk while guaranteeing speed.</li>
+          <li><b>Docker</b> (<span style="font-family:var(--mono)">python:3.11-slim</span>) — a sealed, reproducible CPU-only environment matching the evaluator.</li>
+          <li><b>Google Colab sandbox</b> — runs the pipeline end-to-end on a sample and verifies format + determinism.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3><span class="ic"></span>Submission assets</h3>
+        <ul>
+          <li><span class="chip b">CSV</span> &nbsp;<b>Biscuit.csv</b> — top-100 ranking with reasoning.</li>
+          <li><span class="chip b">REPO</span> &nbsp;clean GitHub repo — full source, Dockerfile, README.</li>
+          <li><span class="chip b">SANDBOX</span> &nbsp;Colab notebook (sample run + checks).</li>
+          <li><span class="chip b">DECK</span> &nbsp;this presentation.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="card" style="background:var(--ink);color:#e2e8f0;border:none;">
+      <h3 style="color:#fff;"><span class="ic" style="background:var(--accent2);"></span>Reproduce in one command</h3>
+      <div style="font-family:var(--mono);font-size:14px;color:#a5b4fc;margin-top:6px;">python rank.py --candidates ./candidates.jsonl --out ./submission.csv</div>
+      <p class="note" style="color:#94a3b8;margin-top:8px;">The uploaded <b style="color:#cbd5e1;">Biscuit.csv</b> is a byte-identical, team-ID-named copy of this output — both committed for traceability.</p>
+    </div>
+  </div>
+  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">10</span></div>
+</section>
+
+</body>
+</html>
