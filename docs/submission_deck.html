@@ -27,8 +27,9 @@
   .hd{display:flex;justify-content:space-between;align-items:center;
       border-bottom:2px solid var(--line);padding-bottom:14px;margin-bottom:26px;}
   .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:20px;letter-spacing:.06em;}
-  .brand{gap:0;}
-  .brand .brandlogo{height:52px;width:auto;display:block;}
+  .brand{gap:11px;align-items:center;}
+  .brand .mark{height:32px;width:32px;object-fit:contain;}
+  .brand .wm{font-weight:800;font-size:19px;letter-spacing:.16em;color:var(--ink);}
   .brand span{color:var(--accent);}
   .hd .ev{font-size:13px;color:var(--muted);font-weight:600;letter-spacing:.04em;text-transform:uppercase;}
   .ft{position:absolute;left:64px;right:64px;bottom:22px;display:flex;justify-content:space-between;
@@ -80,13 +81,65 @@
   .note{font-size:12.5px;color:var(--muted);}
   .lead{font-size:15px;color:var(--ink2);line-height:1.55;}
   .lead b{color:var(--ink);}
+
+  /* ---- template cover / assets / thank-you pages ---- */
+  .cover{position:relative;width:1280px;height:720px;overflow:hidden;display:flex;flex-direction:column;page-break-after:always;background:#0b0a16;}
+  .cbg{position:absolute;inset:0;z-index:0;background:
+      radial-gradient(85% 80% at 14% 30%, rgba(214,64,38,.55), transparent 46%),
+      radial-gradient(80% 80% at 32% 44%, rgba(176,38,92,.5), transparent 52%),
+      radial-gradient(120% 115% at 80% 62%, rgba(74,44,150,.92), transparent 64%),
+      linear-gradient(125deg,#241338,#0b0a16 62%);}
+  .cstripe{position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(90deg,rgba(255,255,255,.05) 0 1px,transparent 1px 8px);mix-blend-mode:overlay;}
+  .hero{position:relative;z-index:2;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;}
+  .brandbar{display:flex;align-items:center;gap:13px;}
+  .brandbar .hex{width:30px;height:30px;background:#fff;clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);}
+  .brandbar .rr{color:#fff;font-weight:800;font-size:27px;letter-spacing:-.01em;}
+  .brandbar .sep{width:1px;height:28px;background:rgba(255,255,255,.45);}
+  .brandbar .h2s{color:#fff;font-weight:800;font-size:23px;letter-spacing:.02em;}
+  .india{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-weight:700;font-size:104px;line-height:1;color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.4);}
+  .india .r{color:#c9b6f7;}
+  .cpill{padding:13px 36px;border:1.5px solid rgba(255,255,255,.55);border-radius:999px;color:#f1f0f6;font-size:21px;}
+  .thanks{font-weight:800;font-size:92px;letter-spacing:.02em;margin-top:6px;
+      background:linear-gradient(90deg,#ffffff,#c9b6f7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+  .cbar{position:absolute;left:0;right:0;bottom:0;height:10px;z-index:3;background:linear-gradient(90deg,#7c3aed,#4f46e5,#2563eb);}
+  .cfields{position:relative;z-index:2;background:#fff;padding:40px 66px 52px;}
+  .cfields .row{font-size:26px;color:#334155;margin-bottom:24px;font-weight:600;}
+  .cfields .row:last-child{margin-bottom:0;}
+  .cfields .row b{color:#0f172a;font-weight:700;}
+  .cfields .ps{font-size:21px;}
+  .apage{position:relative;width:1280px;height:720px;overflow:hidden;display:flex;flex-direction:column;background:#fff;page-break-after:always;}
+  .atop{background:#0a0a0f;display:flex;justify-content:space-between;align-items:center;padding:17px 48px;}
+  .atop .l{display:flex;align-items:center;gap:11px;}
+  .atop .hex{width:23px;height:23px;background:#fff;clip-path:polygon(50% 0,93% 25%,93% 75%,50% 100%,7% 75%,7% 25%);}
+  .atop .rr{color:#fff;font-weight:800;font-size:21px;}
+  .atop .sep{width:1px;height:21px;background:rgba(255,255,255,.4);}
+  .atop .h2s{color:#fff;font-weight:800;font-size:18px;}
+  .atop .ir{color:#fff;font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:26px;}
+  .abody{flex:1;padding:44px 64px;display:flex;flex-direction:column;justify-content:center;}
+  .abody h2{font-size:30px;font-weight:800;color:#0f172a;margin-bottom:22px;}
 </style>
 </head>
 <body>
 
+<!-- ============ PAGE 1 — COVER (template) ============ -->
+<section class="cover">
+  <div class="cbg"></div><div class="cstripe"></div>
+  <div class="hero" style="flex:0 0 58%;">
+    <div class="brandbar"><span class="hex"></span><span class="rr">redrob</span><span class="sep"></span><span class="h2s">H2S</span></div>
+    <div class="india">INDIA<span class="r">.RUNS</span></div>
+    <div class="cpill">Build what next India runs on</div>
+  </div>
+  <div class="cfields">
+    <div class="row">Team Name : &nbsp;<b>Biscuit</b></div>
+    <div class="row">Team Leader Name : &nbsp;<b>Vinayak Sonthalia</b></div>
+    <div class="row ps">Problem Statement : &nbsp;<b>Track 01 — The Data &amp; AI Challenge · Intelligent Candidate Discovery</b></div>
+  </div>
+  <div class="cbar"></div>
+</section>
+
 <!-- ============ PAGE 2 — SOLUTION OVERVIEW ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Solution Overview</div>
   <h1>A deterministic, explainable ranking engine</h1>
   <p class="sub">Biscuit ranks the top 100 candidates from a 100,000-profile pool for a Senior AI Engineer role — CPU-only, zero-dependency, fully reproducible.</p>
@@ -126,7 +179,7 @@
 
 <!-- ============ PAGE 3 — UNDERSTANDING THE JD ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Reading the Job Description</div>
   <h1>What the role <em>says</em> vs. what it <em>means</em></h1>
   <p class="sub">Senior AI Engineer (Founding Team) · Redrob AI · Pune/Noida, India · 5–9 yrs (ideal 6–8).</p>
@@ -165,7 +218,7 @@
 
 <!-- ============ PAGE 4 — RANKING METHODOLOGY ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Ranking Methodology</div>
   <h1>Six weighted dimensions, then two guardrails</h1>
   <div class="body">
@@ -201,7 +254,7 @@
 
 <!-- ============ PAGE 5 — DATA INTEGRITY / HONEYPOTS ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Data Integrity</div>
   <h1>Catching the "perfect-on-paper" traps</h1>
   <p class="sub">The dataset embeds ~80 honeypots — subtly impossible profiles forced to relevance tier 0 in the hidden ground truth. Biscuit hard-eliminates the 42 that are <em>provably</em> impossible; the rest score low and never reach the top 100.</p>
@@ -241,7 +294,7 @@
 
 <!-- ============ PAGE 6 — EXPLAINABILITY ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Explainability</div>
   <h1>A fact-grounded reason for every pick</h1>
   <p class="sub">No LLM, no generative text — every justification is composed from real profile fields, so it is deterministic and free of invented skills or employers.</p>
@@ -273,7 +326,7 @@
 
 <!-- ============ PAGE 7 — ARCHITECTURE ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">System Architecture</div>
   <h1>A transparent, modular pipeline</h1>
   <div class="body">
@@ -301,7 +354,7 @@
 
 <!-- ============ PAGE 8 — VALIDATION ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Validation &amp; Methodology</div>
   <h1>Validated by method, not by guessing</h1>
   <p class="sub">With no public leaderboard and hidden labels, the ranking was validated by recomputable checks over the full pool — not by submitting variants.</p>
@@ -332,7 +385,7 @@
 
 <!-- ============ PAGE 9 — RESULTS / PERFORMANCE ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Results &amp; Performance</div>
   <h1>Fast, frugal, and fully reproducible</h1>
   <div class="body">
@@ -369,7 +422,7 @@
 
 <!-- ============ PAGE 10 — TECH & SUBMISSION ASSETS ============ -->
 <section class="slide">
-  <div class="hd"><div class="brand"><img class="brandlogo" src="logo.png" alt="Biscuit"></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
+  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
   <div class="kicker">Technology &amp; Deliverables</div>
   <h1>Built to be reproduced and inspected</h1>
   <div class="body">
@@ -383,12 +436,12 @@
         </ul>
       </div>
       <div class="card">
-        <h3><span class="ic"></span>Submission assets</h3>
+        <h3><span class="ic"></span>Reproducibility &amp; determinism</h3>
         <ul>
-          <li><span class="chip b">CSV</span> &nbsp;<b>Biscuit.csv</b> — top-100 ranking with reasoning.</li>
-          <li><span class="chip b">REPO</span> &nbsp;clean GitHub repo — full source, Dockerfile, README.</li>
-          <li><span class="chip b">SANDBOX</span> &nbsp;Colab notebook (sample run + checks).</li>
-          <li><span class="chip b">DECK</span> &nbsp;this presentation.</li>
+          <li><b>Byte-identical</b> CSV across runs (MD5-seeded reasoning, not salted <span style="font-family:var(--mono)">hash()</span>).</li>
+          <li>Passes the <b>official format validator</b> — exactly 100 rows.</li>
+          <li><b>One command</b>, no pre-computation, no network, no GPU.</li>
+          <li>Ships with a <b>Dockerfile</b> for a sealed, CPU-only run.</li>
         </ul>
       </div>
     </div>
@@ -399,6 +452,51 @@
     </div>
   </div>
   <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">10</span></div>
+</section>
+
+<!-- ============ SUBMISSION ASSETS (template) ============ -->
+<section class="apage">
+  <div class="atop">
+    <div class="l"><span class="hex"></span><span class="rr">redrob</span><span class="sep"></span><span class="h2s">H2S</span></div>
+    <div class="ir">INDIA.RUNS</div>
+  </div>
+  <div class="abody">
+    <h2>Submission Assets</h2>
+    <div class="grid2" style="align-items:start;">
+      <div class="card">
+        <h3><span class="ic"></span>Links &amp; deliverables</h3>
+        <ul>
+          <li><b>GitHub repository</b><br><span style="font-family:var(--mono);font-size:12.5px;color:var(--blue);">github.com/vinayaksonthalia/biscuit-candidate-ranker</span></li>
+          <li><b>Ranked output</b> — <span style="font-family:var(--mono)">Biscuit.csv</span> · top-100 with fact-grounded reasoning.</li>
+          <li><b>Colab sandbox</b> — runs the pipeline end-to-end on a sample, with format &amp; determinism checks.</li>
+          <li><b>Presentation deck</b> — this document (<span style="font-family:var(--mono)">docs/Biscuit_Submission_Deck.pdf</span>).</li>
+        </ul>
+      </div>
+      <div class="card" style="background:var(--ink);border:none;">
+        <h3 style="color:#fff;"><span class="ic" style="background:var(--accent2);"></span>Reproduce in one command</h3>
+        <div style="font-family:var(--mono);font-size:13.5px;color:#a5b4fc;margin-top:10px;word-break:break-all;">python rank.py --candidates ./candidates.jsonl --out ./submission.csv</div>
+        <p class="note" style="color:#94a3b8;margin-top:12px;">Pure Python standard library · CPU-only · no network · &lt;30 s on the full 100K pool. The uploaded <b style="color:#cbd5e1;">Biscuit.csv</b> is a byte-identical copy of this output.</p>
+      </div>
+    </div>
+    <div class="grid3" style="margin-top:22px;">
+      <div class="stat"><div class="n">&lt;30s</div><div class="l">full 100K run · limit 5 min</div></div>
+      <div class="stat"><div class="n">~2 GB</div><div class="l">peak RAM · limit 16 GB</div></div>
+      <div class="stat"><div class="n">0</div><div class="l">dependencies · GPU · network</div></div>
+    </div>
+  </div>
+  <div class="cbar"></div>
+</section>
+
+<!-- ============ THANK YOU (template) ============ -->
+<section class="cover">
+  <div class="cbg"></div><div class="cstripe"></div>
+  <div class="hero">
+    <div class="brandbar"><span class="hex"></span><span class="rr">redrob</span><span class="sep"></span><span class="h2s">H2S</span></div>
+    <div class="india">INDIA<span class="r">.RUNS</span></div>
+    <div class="cpill">Build what next India runs on</div>
+    <div class="thanks">THANK YOU</div>
+  </div>
+  <div class="cbar"></div>
 </section>
 
 </body>
