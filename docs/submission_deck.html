@@ -422,40 +422,6 @@
   <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">09</span></div>
 </section>
 
-<!-- ============ PAGE 10 — TECH & SUBMISSION ASSETS ============ -->
-<section class="slide">
-  <div class="hd"><div class="brand"><img class="mark" src="logo_mark.png" alt="Biscuit logo"><span class="wm">BISCUIT</span></div><div class="ev">India Runs · Data &amp; AI Challenge</div></div>
-  <div class="kicker">Technology &amp; Deliverables</div>
-  <h1>Built to be reproduced and inspected</h1>
-  <div class="body">
-    <div class="grid2">
-      <div class="card">
-        <h3><span class="ic"></span>Technology choices</h3>
-        <ul>
-          <li><b>Python 3.11 standard library</b> — no pandas/numpy, removing dependency and version risk while guaranteeing speed.</li>
-          <li><b>Docker</b> (<span style="font-family:var(--mono)">python:3.11-slim</span>) — a sealed, reproducible CPU-only environment matching the evaluator.</li>
-          <li><b>Google Colab sandbox</b> — runs the pipeline end-to-end on a sample and verifies format + determinism.</li>
-        </ul>
-      </div>
-      <div class="card">
-        <h3><span class="ic"></span>Reproducibility &amp; determinism</h3>
-        <ul>
-          <li><b>Byte-identical</b> CSV across runs (MD5-seeded reasoning, not salted <span style="font-family:var(--mono)">hash()</span>).</li>
-          <li>Passes the <b>official format validator</b> — exactly 100 rows.</li>
-          <li><b>One command</b>, no pre-computation, no network, no GPU.</li>
-          <li>Ships with a <b>Dockerfile</b> for a sealed, CPU-only run.</li>
-        </ul>
-      </div>
-    </div>
-    <div class="card" style="background:var(--ink);color:#e2e8f0;border:none;">
-      <h3 style="color:#fff;"><span class="ic" style="background:var(--accent2);"></span>Reproduce in one command</h3>
-      <div style="font-family:var(--mono);font-size:14px;color:#a5b4fc;margin-top:6px;">python rank.py --candidates ./candidates.jsonl --out ./submission.csv</div>
-      <p class="note" style="color:#94a3b8;margin-top:8px;">The uploaded <b style="color:#cbd5e1;">Biscuit.csv</b> is a byte-identical, team-ID-named copy of this output — both committed for traceability.</p>
-    </div>
-  </div>
-  <div class="ft"><span>Team Biscuit · Vinayak Sonthalia &nbsp;·&nbsp; Senior AI Engineer Ranking</span><span class="pg">10</span></div>
-</section>
-
 <!-- ============ SUBMISSION ASSETS (template) ============ -->
 <section class="apage">
   <div class="atop">
